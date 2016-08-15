@@ -42,4 +42,4 @@ You can see for example [my own website](https://privefl.github.io/).
 As a reminder, all credit goes to the geniuses at RStudio (thanks also to [GitHub pages](https://pages.github.com/)). I just made some minor modifications and made a tuto about how to use all this together.
 
 If anything is false or not clear enough, feel free to contact me or open an issue.
-
+If it is an issue only related with R Markdown, you'll find a better answer posting [there](https://github.com/rstudio/rmarkdown).

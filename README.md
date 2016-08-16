@@ -9,7 +9,7 @@ The official document from RStudio can be found [here](http://rmarkdown.rstudio.
 ### Prerequisites
 
 - Make sure that you have the latest versions of R, RStudio and package rmarkdown. I had problems of encoding because of that. 
-- Make sure that you have enabled Git in RStudio. More information can be found [here](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN).
+- Make sure that you have enabled Git in RStudio. More information can be found [there](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN).
 - You need a GitHub account.
 
 ### Make the first version of your website

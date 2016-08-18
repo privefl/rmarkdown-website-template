@@ -31,7 +31,7 @@ The official document from RStudio can be found [here](http://rmarkdown.rstudio.
 
 For now, the 'Blog' link is giving a 404 page. 
 
-I will introduce how to create your own blog in a future tuto.
+If you want to add a static blog to your webpage, go [there](https://github.com/privefl/jekyll-now-r-template).
 
 ## An example
 

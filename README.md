@@ -14,7 +14,7 @@ The official document from RStudio can be found [here](http://rmarkdown.rstudio.
 
 ### Make the first version of your website
 
-- Fork this repo and rename it to be 'YOURGITHUB.github.io' (in Settings of your brand new repo).
+- Fork this repo (use the green button "Clone" and make sure you use SSH, not HTTPS) and rename it to be 'YOURGITHUB.github.io' (in Settings of your brand new repo).
 - Get the link from cloning the repo. Then, go to RStudio, create a New Project > Version Control > Git and copy this link. You have cloned your new repo as an R project.
 - Use `rmarkdown::render_site(encoding = "UTF-8")` in the console.
 - Commit and push everything from RStudio.

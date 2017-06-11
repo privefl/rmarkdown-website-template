@@ -33,9 +33,11 @@ For now, the 'Blog' link is giving a 404 page.
 
 If you want to add a static blog to your webpage, go [there](https://github.com/privefl/jekyll-now-r-template).
 
-## An example
+## Two examples
 
-You can see for example [my own website](https://privefl.github.io/).
+You can see for example 
+- [my own website](https://privefl.github.io/),
+- [the website of the R user group in Grenoble](https://r-in-grenoble.github.io/).
 
 ## Conclusion
 

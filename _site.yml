@@ -16,7 +16,7 @@ navbar:
   right:
     - text: "Contact me"
       icon: fa-envelope-o
-      href: mailto:YOUREMAIL                      # CHANGE HERE 
+      href: mailto:ngotuandung1991@gmail.com                      # CHANGE HERE 
     - text: "GitHub"
       icon: fa-github
       href: https://github.com/YOURGITHUB         # CHANGE HERE 

@@ -1,4 +1,4 @@
-name: "YOURNAME"                                  # CHANGE HERE 
+name: "QcJun"                                  # CHANGE HERE 
 output_dir: "."
 navbar:
   title: "QcJun"                               # CHANGE HERE 

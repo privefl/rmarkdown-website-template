@@ -24,7 +24,7 @@ The official document from RStudio can be found [here](http://rmarkdown.rstudio.
 
 - Commit and push everything from RStudio.
 
-- Go see your new website at https://YOURGITHUB.github.io/.
+- Go see your new website at https://YOURGITHUB.github.io/index.html.
 
 ### Change the content of your website
 

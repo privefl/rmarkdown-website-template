@@ -1,7 +1,7 @@
-name: "QcJun"                                  # CHANGE HERE 
+name: "Tuan-Dung Ngo"                                  # CHANGE HERE 
 output_dir: "."
 navbar:
-  title: "QcJun"                               # CHANGE HERE 
+  title: "Tuan-Dung Ngo"                               # CHANGE HERE 
   type: inverse
   left:
     - text: "Home"
@@ -10,7 +10,7 @@ navbar:
     - text: "About"
       icon: fa-user 
       href: about.html
-    - text: "CV"
+    - text: "Papers/Talks"
       icon: fa-file-pdf-o
       href: cv.html
   right:

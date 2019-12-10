@@ -1,5 +1,9 @@
 ---
-title: "Welcome to my website!"
+title: "Hi there, welcome to Persiv"
+output:
+  html_document:
+    includes:
+      in_header: cover.html
 ---
 
-You're up and running!
+This site is dedicated to Data visualizations.

@@ -1,4 +1,4 @@
-name: "YOURNAME"                                # CHANGE HERE 
+name: "persiv"                                # CHANGE HERE 
 output_dir: "."
 navbar:
   title: "YOURNAME"                             # CHANGE HERE 

@@ -1,7 +1,7 @@
 ---
-title: "About me"
+title: "Daniel"
 ---
 
 ## Header
 
-Say more about you here.
+My name is Daniel.

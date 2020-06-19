@@ -42,7 +42,6 @@ I currently work as a Lecturer in Mathematics and Statistics at Middlebury Colle
 
 <div class="btn-group" role="group" aria-label="Links">
   <a role="button" class="btn btn-outline-primary btn-sm" href="EMW_CV.pdf">View CV</a>
-  <a role="button" class="btn btn-outline-primary btn-sm" href="https://www.youtube.com/channel/UCGE_eugh_WGuQfb1T4Y35SA">YouTube Channel</a>
   <a role="button" class="btn btn-outline-primary btn-sm" href="https://www.ratemyprofessors.com/ShowRatings.jsp?tid=2068864" >RateMyProfessor Reviews</a>
 </div>
 

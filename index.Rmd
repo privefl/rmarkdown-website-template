@@ -1,5 +1,48 @@
 ---
-title: "Welcome to my website!"
+output:
+  html_document:
+    fig_width: 1
+include: 
+  - .img-circle {border-radius: 50%;}
 ---
 
-You're up and running!
+<style>
+.column-left{
+  float: left;
+  width: 40%;
+  text-align: center;
+}
+.column-main{
+  display: inline-block;
+  width: 60%;
+  text-align: left;
+}
+</style>
+
+
+<br>
+<br>
+
+<div class="column-left">
+<img src="emily.png" alt="Emily Malcolm-White headshot" align="middle" class="img-circle" width="200" height="200" style=" margin: 20px 20px 20px 20px;">
+
+Emily Malcolm-White\
+*Lecturer at Middlebury College*\
+emilybmwhite@gmail.com
+</div>
+
+<div class="column-main">
+
+**Hi! I'm Emily Malcolm-White.**  I am an educator and student support specialist with a love for developing and teaching mathematics, statistics, and data science courses.
+
+I believe that STEM education should be inclusive and accessible for all. I hope to minimize barriers for all students, including those with varying academic backgrounds, those with responsibilities outside of academics, and those with disabilities. I take the time to learn about innovative and effective teaching pedagogy and like to keep trying new things to maximize my effectiveness as an instructor. 
+
+I currently work as a Lecturer in Mathematics and Statistics at Middlebury College in Vermont. Prior to that I was a Math and Statistics Specialist within the Academic Assistance and Tutoring Centers at UC Davis. I have a Bachelor of Science in Applied Mathematics and Statistics from the University of Guelph and a Masters of Science in Statistics from the University of Victoria. 
+
+<div class="btn-group" role="group" aria-label="Links">
+  <a role="button" class="btn btn-outline-primary btn-sm" href="EMW_CV.pdf">View CV</a>
+  <a role="button" class="btn btn-outline-primary btn-sm" href="https://www.youtube.com/channel/UCGE_eugh_WGuQfb1T4Y35SA">YouTube Channel</a>
+  <a role="button" class="btn btn-outline-primary btn-sm" href="https://www.ratemyprofessors.com/ShowRatings.jsp?tid=2068864" >RateMyProfessor Reviews</a>
+</div>
+
+</div>

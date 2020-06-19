@@ -1,0 +1,8 @@
+---
+title: "Intro to Statistics"
+output:
+  html_document:
+    fig_width: 1
+---
+
+More Coming Soon!

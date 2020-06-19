@@ -1,4 +1,5 @@
 ---
+title: " "
 output:
   html_document:
     fig_width: 1

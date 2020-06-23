@@ -6,18 +6,13 @@ output:
     fig_width: 1
 ---
 
-[Basics Notes](notes/Notes_Basics_Instructor.html)
+These are my notes from when I taught "Introduction to Data Science" at Middlebury College in Spring 2020. 
 
-[Transformation Notes](notes/Notes_Transformation_Instructor.html)
-
-[Visualization Notes](notes/Notes_Visualization_Instructor.html)
-
-[Joins Notes](notes/Notes_Joins.html)
-
-[Maps Notes](notes/Notes_Maps.html)
-
-[Web Scraping Notes](notes/Notes_WebScraping.html)
-
-[Modeling Notes](notes/Notes_Modeling.html)
-
-[Animation](notes/Notes_Animation.Rmd)
+* [Basics Notes](notes/Notes_Basics_Instructor.html)
+* [Transformation Notes](notes/Notes_Transformation_Instructor.html)
+* [Visualization Notes](notes/Notes_Visualization_Instructor.html)
+* [Joins Notes](notes/Notes_Joins.html)
+* [Maps Notes](notes/Notes_Maps.html)
+* [Web Scraping Notes](notes/Notes_WebScraping.html)
+* [Modeling Notes](notes/Notes_Modeling.html)
+* [Animation Notes](notes/Notes_Animation.Rmd)

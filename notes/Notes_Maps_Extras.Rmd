@@ -1,0 +1,101 @@
+---
+title: 'MATH 216 - Notes: Maps EXTRAS'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    fig_crop: yes
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+
+
+
+# Using `maps`
+
+The `maps` package contains several built in maps: world (for all countries in the world), france, italy, nz, usa, state (usa state boundaries), and county (usa counties). 
+
+To reference each map you use `map_data("mapname")`. Rather than use `geom_sf` map data in this format needs to be mapped using `geom_polygon`. 
+
+```{r}
+world_map <- map_data("world")
+
+ggplot(world_map, aes(long, lat)) + 
+  geom_polygon(aes(group=group),fill="lightgrey", col="black") + 
+  theme_light()
+```
+
+
+You can subset the data from particular country/countries.  
+
+## Canada
+
+```{r}
+canada <- map_data("world", region = "canada")
+
+ggplot(canada, aes(long, lat)) + 
+  geom_polygon(aes(group=group), fill="darkgrey",col="black") + 
+  theme_light() + 
+  theme(legend.position = "none") 
+
+#notice how this looks weird? This is because the longitude and latitude are not scaled properly... 
+```
+
+```{r}
+canada <- map_data("world", region = "canada")
+
+ggplot(canada, aes(long, lat)) + 
+  geom_polygon(aes(group=group), fill="darkgrey",col="black") + 
+  theme_light() + 
+  theme(legend.position = "none") +
+  coord_fixed(ratio = 1) 
+
+#projection still doesn't look quite right... 
+```
+
+
+
+## EU
+
+```{r}
+some.eu.countries <- c(
+  "Portugal", "Spain", "France", "Switzerland", "Germany",
+  "Austria", "Belgium", "UK", "Netherlands",
+  "Denmark", "Poland", "Italy", 
+  "Croatia", "Slovenia", "Hungary", "Slovakia",
+  "Czech republic"
+)
+
+europe <- map_data("world", region = some.eu.countries)
+
+ggplot(europe, aes(long, lat)) + 
+  geom_polygon(aes( group=group, fill=region), col="black") + 
+  theme_light() + 
+  theme(legend.position = "none") 
+
+#this is an instance where you would want to re-visit the projection
+```
+
+
+
+## Adding Data from another dataset
+
+```{r}
+# Prepare the USArrests data
+arrests <- USArrests 
+arrests$region <- tolower(rownames(USArrests))
+head(arrests)
+
+# Retrieve the states map data and merge with crime data
+states_map <- map_data("state")
+arrests_map <- left_join(states_map, arrests, by = "region") #we will talk alot more about joins in the 
+
+head(arrests_map)
+
+# Create the map
+ggplot(arrests_map, aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = Murder), color = "black") +
+  theme_light()
+```
+

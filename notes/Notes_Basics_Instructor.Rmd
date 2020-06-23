@@ -1,0 +1,356 @@
+---
+title: 'MATH 216 - Notes: Basics'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+# Getting Set-up
+
+## Installing and Setting up RStudio
+
+The R console looks like this: 
+
+![](https://d33wubrfki0l68.cloudfront.net/692f3658d35df168276cf46e3e083f908a5cc105/f7707/wp-content/uploads/2014/04/rstudio-windows.png)
+
+## File Organization
+
+Make sure that you set up a folder for this class. 
+
+## Using RMarkdown/knitr
+
+You can *knit* the file. The first time you do this you will need to make sure you have the `knitr` package installed. You have the option to knit into `.html`, `.pdf`, and `.doc`. In general, in this course we will be knitting into `.html`. 
+
+## RMarkdown formatting 
+
+To make something "code-looking" we use the grave accent ` found in the upper left of your keyboard. 
+
+To create a header, place a hash tag at the start of the line. For example, `# Header 1` or create a level 2 header using `## Header Level 2`. 
+
+To make text italics put asterisk around the text `*like this*`. To make text bold, put two asterisks around the text `**like this**`. 
+
+To make a list, just start creating your list using a `-` or `*` for each bullet, like this: 
+
+```{r eval=F}
+- list item 1
+- list item 2
+```
+
+It is important that there is a blank line before the first bullet.  
+
+Add a link with the follwing code: 
+
+`[Alt text that will display](www.google.com)`
+
+It will display like this: 
+
+[Alt text that will display](www.google.com)
+
+Add an image with the following code: 
+
+`![Alt text](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/rmarkdown_wizards.png)`
+
+It will display like this: 
+
+![Alt text](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/rmarkdown_wizards.png)
+
+The vast majority of markdown syntax are available in the [RStudio RMarkdown Cheatsheet, Section 3](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf). 
+
+## R Chunks 
+
+Create an R chunk: 
+
+```{r}
+2+2
+```
+
+OR
+
+```{r}
+x<-4
+``` 
+
+`echo=T` or `echo=F`-- determines whether or not to echo the source code in the output file. This can be useful if you are creating a document for someone to read that doesn't need to see or doesn't want to see you code, just the output. In general in this course for assignments I would like your code to be echoed. The default is `echo=F`. 
+
+`results=T` or `results=F` -- determines whether or not the results will be displayed. This can be useful if you want to show code, but don't care what the output is. The default is `eval=T`.
+
+`eval=T` or `eval=F` -- determines whether or not to evaluate the code. This can be useful if you have a whole chunk of code you don't want run, but you also don't want to. The default is `eval=T`.
+
+There are many, many more options including `fig.width`, `fig.height`, `cache`, etc. The vast majority of options are available in the [RStudio RMarkdown Cheatsheet, Section 5](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf). 
+
+You have the option to set the options individually on each chunk and/or set the global options by using the code `knitr::opts_chunk$set(your options here))` in the first code chunk. 
+
+## Inline Code
+
+Rather than using a code chunk (which is centered in the middle of the page), you also have to options to use inline code. You can place the following within any sentence or paragraph. 
+
+```{r eval=F}
+`r codehere`
+```
+
+For example, 
+
+```{r eval=F}
+This is the number `r x`.
+```
+
+becomes... This is the number `r x`.
+
+
+## Installing Packages
+
+Packages can contain lots of things including: data sets, functions, etc.
+
+You can install packages using the packages tab or you can use the code `install.packages('packageyouwant')` in the console. 
+
+In each new R session where you want to use the package you will have to load it by typing `library('packageyouwant')` in the console (or in the RMarkdown document - more later). 
+
+To get help with a package (or a function in a package) you can type `?packagename` into the console. 
+
+## Additional Reading (Optional)
+
+- [R for Data Science, Chapter on RMarkdown](https://r4ds.had.co.nz/r-markdown.html)
+- For a great RMarkdown Cheat sheet. In RStudio go to *Help* -> *Cheatsheets* -> *RMarkdown Cheatsheet*
+
+# Some Basic R code
+
+## Variables, Calculations, Vectors
+
+Assigning Variables: 
+
+```{r}
+x<-56
+```
+
+Calculations: 
+
+```{r}
+y <- x*2 #multiply
+          # note that because value is assigned to y, it won't print out
+y #prints out the value of y
+x/2 #divide
+x^2 #x to the power of 2
+```
+
+
+Vectors: 
+
+```{r}
+# c() function: concatenate
+heights <- c(67, 100, 34, 78, 80)
+```
+
+Referencing Elements of a Vector:
+
+```{r}
+heights[3]
+```
+
+Adding to Vectors:
+
+```{r}
+heights <- c(heights, 90)
+heights
+```
+
+## Importing  Data
+
+From a file on your computer: 
+
+```{r}
+airbnb <- read.csv("NYCairbnb2019.csv")
+```
+
+From the web: 
+
+```{r}
+library("openintro")
+cars
+```
+
+For now, we will mostly be working with `.csv` and `.xls` files. Later in the course, we may discuss other types of files. 
+
+## Basics for Working with a Dataframe
+
+Assessing Size:
+
+```{r}
+# dim() spits out dimensions of a dataframe
+dim(airbnb)
+```
+
+Names: 
+
+```{r eval=FALSE}
+# names() spits out column names of a dataframe
+names(airbnb)
+```
+
+Referencing Columns: 
+
+```{r eval=F}
+airbnb$latitude
+airbnb[,3]
+airbnb[,"latitude"]
+
+
+attach(airbnb)
+latitude
+```
+
+Calculations: 
+
+```{r}
+mean(airbnb$price)
+median(airbnb$price)
+sd(airbnb$price) #standard deviation
+```
+
+```{r}
+# calculates the mean price, broken down by neighbourhood group
+tapply(airbnb$price, airbnb$neighbourhood_group, mean)
+
+#calculates the mean price, broken down by room type
+tapply(airbnb$price, airbnb$room_type, mean)
+```
+
+Conditional Subsetting: 
+
+```{r}
+# prints out all the rows where the price is more than 8000
+airbnb[airbnb$price >= 8000,]
+```
+
+```{r eval=F}
+# prints out all the rows where the neighbourhood group is Manhattan
+# note the double equal sign
+airbnb[airbnb$neighbourhood_group=="Manhattan",]
+```
+
+## Basic Plotting
+
+```{r}
+hist(airbnb$price)
+plot(airbnb$reviews_per_month, airbnb$price)
+```
+
+
+```{r}
+plot(cars$mpgCity, cars$weight)
+boxplot(cars$mpgCity ~ cars$type)
+```
+
+```{r}
+table(cars$type)
+barplot(table(cars$type))
+
+```
+
+# Best Practices 
+
+## Commenting
+
+- Be sure to comment your code (in R, use a `#` before a line of comment)
+- The more descriptive you can be the easier it will be for other to read (and for you to read later)
+
+## Naming
+
+When naming variables, observations, data frames, or files, make them: 
+
+- meaningful 
+- consistent
+- concise 
+- code and coder friendly 
+
+Other naming considerations: 
+
+- avoid names that are common/used function names (ie. `filter` or `mean`)
+- consider making object names nouns, and function names verbs
+- it's not the end of the world if you give something a bad name, but it will save you (and others) time and effort down the road
+- avoid formatting and symbols (ie. spaces or \&)
+- keep a clear record of your variable names as well as longer descriptions including units (ie. `surface_temp`= surface temperature measurement on Mars in degrees Celsius)
+
+## Entering Things 
+
+Some suggestions for best practices: 
+
+- be consistent (ie. `purple` vs. `Purple` vs. `purple_`)
+- put any additional information such as units or notes in a column separate from the value
+- if there is missing entries, enter the name thing for each missing value (it is common to use `NA`, `NaN`, `-9999`, `-`); don't leave cells blank
+- if data is abbreviated, make a record somewhere of how the what they mean
+
+## Example 
+
+by @alisonhorst
+
+![Bad data entry, by @alisonhorst](https://lh3.googleusercontent.com/xB6GoZJYB4VIfbPqRtKz7uxkDBWBFNrbWaH6fMS_YUWanFRyzG75KUPR5TPOVfUyA3Zb8RF7QNkbK-FqskycStEIr60_cUUTeNt7wL5bF3pYHwppualBoGqTd7QL1BqfpBchjvgC69E){width=49%} ![Good data entry, by @alisonhorst](https://lh5.googleusercontent.com/655F7d_yUWnkvkHTKcLglp05TjXGNKbChaKpgMhIvK2-EQymipq4uBTkHaWuh6VWYE8-J9FxXND5rtQll8PPMaYXLq0xZET7Vq8K7wj4lpKolBQdnesx6ovHFzsAGp8TLNXKn-WpmQk){width=49%}
+
+
+## Additional Reading (Optional)   
+
+- [Advanced R by Hadley Wickham - Style Guide](http://adv-r.had.co.nz/Style.html)
+- [Data Organization in Spreadsheets, from The American Statistician](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989)
+
+
+# The Basics of Working with Missing Data
+
+Missing data are usually in the data as `NA`, `NaN`, `N/A`, or `-9999`. When doing operators on numbers, most functions will return `NA` if the data includes missing values. 
+
+```{r}
+mean(airbnb$reviews_per_month)
+```
+
+```{r}
+# use arguement na.rm to remove NAs
+mean(airbnb$reviews_per_month, na.rm=T)
+
+#OR 
+
+# use function na.omit() to return a vector without NAs, then take the mean
+mean(na.omit(airbnb$reviews_per_month))
+```
+
+
+# Working with Factors
+
+Factors are used to represent categorical data. Factors can be ordered or unordered and are an important class for statistical analysis and plotting. 
+
+```{r}
+#to check whether something is a factor
+is.factor(cars$type)
+```
+
+```{r}
+# to make something a factor
+cars$type <- factor(cars$type)
+```
+
+
+Once created, factors can only contain a pre-defined set values, known as levels. By default, R always sorts levels in alphabetical order. 
+
+```{r}
+#to see the levels
+levels(cars$type)
+
+#to see the number of levels
+nlevels(cars$type)
+
+table(cars$type)
+```
+
+
+```{r}
+#to change the order or to give order
+cars$type <- factor(cars$type, levels = c("small", "midsize", "large"), ordered=T)
+
+min(cars$type)
+```
+
+Note that if you only want to plot two of the factors (say small and midsize cars). 
+
+```{r}
+boxplot(cars$mpgCity~cars$type)
+```

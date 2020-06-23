@@ -1,0 +1,202 @@
+---
+title: 'MATH 216 - Notes: Modeling'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    fig_crop: yes
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+```{r include=FALSE}
+library(tidyverse)
+```
+
+
+# House Dataset
+
+Here is some data on homes that recently sold in some area: 
+
+```{r}
+house <- read.csv("https://raw.githubusercontent.com/ebmwhite/MATH0216/master/data/HousePrices.csv")
+head(house)
+```
+
+## Exploratory Data Analysis
+
+```{r}
+table(house$Beds)
+```
+
+
+```{r}
+house %>%
+  ggplot(aes(x = Price)) +
+  geom_histogram(bins=15) +
+  theme_light()
+```
+
+```{r}
+house %>%
+  ggplot(aes(x = Size,
+             y = Price)) +
+  geom_point() + 
+  theme_light()
+```
+
+## Simple Linear Regression Model
+
+Construct a linear model:
+
+$$
+\text{Price} = m * \text{Size} + b
+$$
+
+```{r}
+#lm = linear model
+model <- lm(Price ~ Size, data = house)
+coef(model)
+```
+
+Plot our model on top of our data:
+
+```{r}
+house %>%
+  ggplot(aes(x = Size,
+             y = Price)) +
+  geom_point() +
+  geom_abline(slope = coef(model)[2],
+              intercept = coef(model)[1],
+              color = "red",
+              size = 1) +
+  theme_light()
+```
+
+## Is this a good model?
+
+### Are the assumptions met? 
+
+- Are the rows independent from one another? 
+- Are the errors normally distributed?
+
+```{r}
+plot(model)
+```
+
+### Are our explantory variables good predictors of y? 
+
+```{r}
+summary(model)
+```
+
+
+## Using the Model to Make Predictions
+
+We can use this model to make predictions about 
+
+```{r}
+predict.lm(model, data.frame(Size = 2000))
+```
+
+Remember that you can only make predictions for values similars to whats in your dataset: 
+
+- you shouldn't use this model to make predictions for houses much smaller than what is in our dataset (say 25 sqft) or houses much larger than what is in our dataset (say 10000 sqft)
+- if this data is collected from a particular city of neighborhood, we shouldn't use it to make predictions for other cities or neighborhoods. 
+
+## Add More Variables = Multiple Regression
+
+```{r}
+full.model <- lm(Price ~ Size + Beds + Baths + New, data=house) 
+summary(full.model)
+```
+
+## Comparing Models
+
+### R-squared: the percent of variation in our response variable that's explained by our model - Higher values are better
+
+```{r}
+summary(model)$r.squared
+summary(full.model)$r.squared
+```
+
+
+### AIC (Akaike Information Criterion) - Lower values are better
+
+```{r}
+AIC(model)
+AIC(full.model)
+```
+
+## Using the Step Function
+
+You may be unsure which variable to leave in and which to leave out. You can feed the full model into the step function and it will decide!
+
+```{r}
+#to see the steps
+step(full.model)
+```
+
+```{r}
+# to just print out the best model
+step(full.model, trace=F)
+```
+
+# Email Dataset
+
+```{r include=FALSE}
+library(openintro)
+data("email")
+```
+
+You can learn more about this dataset by typing `?email` into the console. 
+
+## Logistic Regression to Predict a Binary Variable (Spam or not spam)
+
+The goal of logistic regression is to get a predicted probability for a binary variable (say whether an email is spam or not) based on some explanatory variable(s). 
+
+The output and interpretation of logistic regression is somewhat different from that of previous models.
+
+```{r}
+viagra.model <-glm(factor(spam) ~ viagra,
+                   data = email,
+                   family = "binomial") 
+summary(viagra.model)
+```
+
+An email containing the word Viagra does not have a significant effect on whether or not an email is spam or not. 
+
+```{r}
+table(email$spam, email$viagra)
+```
+
+
+```{r}
+winner.model <-glm(factor(spam) ~ winner,
+                   data = email,
+                   family = "binomial") 
+summary(winner.model)
+```
+
+We see from the estimates of the coefficients that `winner` influences `spam` positively --> those emails which have winner will have an increased probability of being spam emails. 
+
+We can tell the winner.model is a better model than viagra.model for several reasons: 
+
+- `viagra` is not significant in `viagra.model`
+- `winner` has a significant positive effect in `winner.model`
+- the AIC for `winner.model` is 2416.7 which is smaller than the AIC for `viagra.model` which is 2436.4
+
+## Predictions
+
+```{r}
+predict(winner.model, data.frame(winner="yes"), type="response")
+
+predict(winner.model, data.frame(winner="no"), type="response")
+```
+ 
+If an email has the word winner in it, based on our model there is a 31% chance that the it will be a spam email. 
+
+If an email does not have the word winner in it, based on our model there is an 9% chance it will be a spam email. 
+
+
+

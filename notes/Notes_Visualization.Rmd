@@ -1,0 +1,253 @@
+---
+title: 'MATH 216 - Notes: Visualization'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+# ![](https://github.com/rstudio/hex-stickers/blob/master/PNG/ggplot2.png?raw=true){width=50px} `ggplot2`
+
+`ggplot2` is the most elegant and aesthetically pleasing graphics framework available in R. The way you make plots in `ggplot2` is very different from base graphics making the learning curve steep. That said, it's totally worth it. 
+
+```{r output=F, warning=F}
+#Within each document, it is important to call the ggplot2 package so it knows you will be using functions/data/etc from inside that package
+library(ggplot2)
+library(tidyverse)
+```
+
+It’s essential that you properly organize your data into a data frame before you start with `ggplot2`. This why we spend the last week or two focus on learning ways to transform and wrangle data into different formats. 
+
+Once you have your data ready to go then you gradually add bits and pieces to it to create a plot. Plots are built up in layers, with the typically ordering being  
+
+1. Plot the data
+2. Overlay a summary
+3. Add metadata and annotation
+
+# Basics
+
+We will be working with the dataset `mpg`. 
+
+```{r}
+data(mpg)
+```
+
+
+
+## The Setup
+
+```{r}
+# ggplot ( dataframe, aes(x=xvariable, y=yvariable))
+ggplot(mpg, aes(cty, hwy))
+
+```
+
+A blank ggplot is drawn. Even though the x and y are specified, there are no points or lines in it. This is because, ggplot doesn’t assume that you meant a scatterplot or a line chart to be drawn. I have only told ggplot what dataset to use and what columns should be used for X and Y axis. I haven’t explicitly asked it to draw any points.
+
+
+## Plotting Points
+
+The basics: 
+```{r}
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point()
+```
+
+To customize colors, plotting characters, size: 
+```{r }
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point(col="steelblue", pch=1, size=2)
+```
+
+![A list of possible `pch` values](https://4.bp.blogspot.com/-y8lc2d5wC5Y/V1MPvuoT4BI/AAAAAAAAY3g/G1i3OQx0nq8IZUUGw8qjraPFvYEh5IXaACLcB/s1600/Rplot01.png){width=200px}
+
+## Adding Layers 
+
+Let’s make a scatterplot on top of the blank ggplot by adding points using a geom layer called `geom_point`.
+
+```{r}
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point(col="steelblue", size=2) +
+  labs(title="City MPG vs. Highway MPG", 
+         subtitle="this is a subtitle", 
+         x="City MPG", 
+         y="Highway MPG", 
+         caption="source: mpg dataset") 
+
+```
+
+
+
+## Colors by Group
+
+```{r}
+gg <- ggplot(mpg, aes(cty, hwy)) +
+  geom_point(aes(col=class), size=2) +
+  labs(title="City MPG vs. Highway MPG", 
+         subtitle="this is a subtitle", 
+         x="City MPG", 
+         y="Highway MPG", 
+         caption="source: mpg dataset") 
+
+gg
+```
+
+As an added benefit, the legend is added automatically. If needed, it can be removed by setting the legend.position to None from within a `theme()` function.
+
+```{r}
+gg + theme(legend.position="None")
+```
+
+
+Also, You can change the color palette entirely.
+
+```{r}
+gg + scale_colour_brewer(palette="Spectral")
+
+```
+
+More of such palettes can be found in the `RColorBrewer` package
+
+![`RColorBrewer` palettes](http://r-statistics.co/screenshots/color_palettes.png){width=300px}
+
+You can also build your own color palettes using the built in colors in R or by using HEX codes (ie. #RRGGBB )
+
+![R Built In Colors](http://sape.inf.usi.ch/sites/default/files/ggplot2-colour-names.png)
+
+We will spend more time later in the course discussing best practices for color choices, but for now keep in mind: 
+
+- use intuitive/meaningful colors, if possible
+- make to use colors with high contrast (exception: avoid red and green if possible)
+
+## Adding Text, Labels, and Annotation
+
+```{r}
+ggplot(mpg, aes(cty, hwy, label=model)) +
+  geom_point(aes(col=class), size=2) +
+  labs(title="City MPG vs. Highway MPG", 
+         subtitle="this is a subtitle", 
+         x="City MPG", 
+         y="Highway MPG", 
+         caption="source: mpg dataset") +
+  geom_text(size=2)
+
+
+
+```
+
+
+## Using Themes
+
+Themes can be a useful way to "style" an entire graph at once. Common themes are `theme_classic()`, `theme_dark()`, `theme_bw()`, and `theme_grey()`. 
+
+```{r}
+gg + theme_grey()
+```
+
+`library(ggthemes)` contains lots of additional themes including `theme_wsj()` (Wall Street Journal), `theme_economist()` (The Economist), `theme_fivethirtyeight()` (Five Thirty Eight), etc. 
+
+```{r}
+#make sure you have run install.packages("ggthemes") on your computer at some point
+library(ggthemes)
+
+gg + theme_fivethirtyeight()
+
+```
+
+# More Plot Types
+
+## Histograms
+
+Histograms should be used for one continuous variable. 
+
+```{r}
+#hist(mpg$cty)
+
+ggplot(mpg, aes(cty))  +
+  geom_histogram(binwidth=2)
+```
+
+
+## Boxplots 
+
+Boxplots should be used for one continuous variable. Side-by-Side Boxplots can be good for comparing a numerical variable across many different levels (categories). 
+
+```{r}
+mpg %>% 
+  mutate(class = reorder(class, cty, FUN=median)) %>% 
+  ggplot(aes(x=class, y=cty)) +
+  geom_boxplot(fill="steelblue", outlier.size = 0)
+```
+
+
+## Barplots
+
+Barplots should be used for one or two categorical variables. 
+
+```{r}
+mpg %>% 
+  mutate(unit = 1) %>% 
+  mutate(manufacturer = reorder(manufacturer, unit, FUN=sum)) %>% 
+  ggplot(aes(x=manufacturer)) +
+  geom_bar() +
+  labs(title="Barplot of One Categorical Variable", subtitle="Manufacturers of Cars") +
+theme(axis.text.x=element_text(angle=90))
+  #coord_flip()
+```
+
+```{r}
+mpg %>% 
+  mutate(unit = 1) %>% 
+  mutate(manufacturer = reorder(manufacturer, unit, FUN=sum)) %>% 
+  ggplot(aes(x=manufacturer)) +
+  geom_bar() +
+  geom_text(stat='count', aes(label=..count..), vjust=-1)
+  labs(title="Barplot of One Categorical Variable", subtitle="Manufacturers of Cars") +
+  theme(axis.text.x=element_text(angle=90))
+```
+
+
+```{r}
+mpg %>% 
+  ggplot(aes(manufacturer)) +
+  geom_bar(aes(fill=class)) +
+  coord_flip() +
+  scale_fill_brewer(palette="Spectral")
+```
+
+The are **so many** different ways to modify the themes -  the legend, where the axis ticks go, the background colors, the position of text, the font, etc. You can get a the full scope of all the options by typing `?theme` into the console. 
+`scale_color_brewer()` is for points, lines, etc.
+`scale_fill_brewer()` is for barplots, boxplots
+
+`scale_color_manual()` is for points, lines, etc.
+`scale_fill_manual()` is for barplots, boxplots
+
+## Time Series
+
+```{r}
+gapminder <- read.csv("https://ebmwhite.github.io/MATH0216/activities/gapminder.csv")
+```
+
+```{r}
+gapminder %>% 
+  ggplot(aes(x=year, y=lifeExp, group=country)) +
+  geom_line()
+```
+
+```{r}
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarize(lifeExp = mean(lifeExp)) %>% 
+  ggplot(aes(x=year, y=lifeExp,color=continent)) +
+  geom_line()
+```
+
+
+# Quick Reference
+
+Here are some resources that may be useful quick reference guides for `ggplot2`: 
+
+- [RStudio ggplot2 Cheatsheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+- [R-Statistics.co ggplot2 cheatsheet](http://r-statistics.co/ggplot2-cheatsheet.html)

@@ -2,7 +2,22 @@
 title: "Data Science"
 output:
   html_document:
+    toc_float: true
     fig_width: 1
 ---
 
-More Coming Soon!
+[Basics Notes](notes/Notes_Basics_Instructor.html)
+
+[Transformation Notes](notes/Notes_Transformation_Instructor.html)
+
+[Visualization Notes](notes/Notes_Visualization_Instructor.html)
+
+[Joins Notes](notes/Notes_Joins.html)
+
+[Maps Notes](notes/Notes_Maps.html)
+
+[Web Scraping Notes](notes/Notes_WebScraping.html)
+
+[Modeling Notes](notes/Notes_Modeling.html)
+
+[Animation](notes/Notes_Animation.Rmd)

@@ -1,0 +1,275 @@
+---
+title: 'MATH 216 - Notes: Transformation'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+# Loading the tidyverse
+
+The tidyverse is an opinionated collection of R packages designed for data science. Make sure that you have the tidyverse installed by typing `install.packages("tidyverse")` into the Console in the bottom left corner. You only need to do this once. 
+
+```{r output=F, warning=F}
+#Within each document, it is important to call the tidyverse package so it knows you will be using functions/data/etc from inside that package
+library(tidyverse)
+```
+
+
+
+# ![](https://github.com/rstudio/hex-stickers/blob/master/PNG/tibble.png?raw=true){width=50px} `tibble` 
+
+For the next little while we will work with “tibbles” instead of R’s traditional data.frame. Tibbles are data frames, but they tweak some older behaviors to make life a little easier.
+
+Tibbles have a refined print method that shows only the first 10 rows, and all the columns that fit on screen. This makes it much easier to work with large data. Tibbles are designed so that you don’t accidentally overwhelm your console when you print large data frames. 
+
+
+We will be working with the `diamonds` dataset that is contained within the `tidyverse` package.
+
+```{r}
+#to load data
+data(diamonds)
+
+#to learn about dataset
+?diamonds
+```
+
+
+# ![](https://github.com/maxogden/hexbin/blob/gh-pages/hexagons/dplyr.png?raw=true){width=50px} `Dplyr` 
+
+
+## Choosing Columns with `select()`:
+
+![swcarpentry](http://swcarpentry.github.io/r-novice-gapminder/fig/13-dplyr-fig1.png){width=200pt}
+
+```{r}
+#select( dataset, columns wanted)
+# selects from the diamonds dataset only 4 columns (carot, cut, color, and clarity)
+select(.data = diamonds, carat, cut, color, clarity ) 
+```
+
+
+## Renaming variables with `rename()`:
+
+```{r}
+rename(.data=diamonds, 
+        table_in_mm = table)
+```
+
+
+## Sorting and Reordering with `arrange()`:
+
+```{r}
+#displays table with carrots from smallest to largest
+arrange(.data=diamonds, 
+        carat)
+
+#displays table with carrots from largest to smallest
+arrange(.data=diamonds, 
+        -carat)
+```
+
+## Adding new columns using `dplyr`'s `mutate()`:
+
+```{r}
+mutate(.data=diamonds, volume=x*y*z)
+```
+
+
+## Subsetting and Filtering Data with `filter()`:
+
+```{r}
+#displays all rows in diamonds dataset whose price is more than 12000
+filter(.data = diamonds, 
+       price > 12000) 
+
+#creates a new dataset called `expensive.diamonds` 
+expensive.diamonds <- filter(.data = diamonds,
+                             price > 12000)
+```
+
+
+```{r}
+#Find color D or E diamonds
+expensive.pretty.diamonds <- filter(expensive.diamonds, 
+                                    color == "D" | color == "E")
+```
+
+```{r}
+expensive.pretty.diamonds
+```
+
+
+```{r}
+# is_tibble (check whether an data object is a tibble)
+# as_tibble (treat the data object like a tibble)
+```
+
+### RStudio's `dplyr` cheatsheet
+[https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+
+
+#  ![](https://github.com/maxogden/hexbin/blob/gh-pages/hexagons/pipe.png?raw=true){width=50px} `%>%` (Piping) 
+
+The pipe, `%>%`, comes from the `magrittr` package by Stefan Milton Bache. Packages in the tidyverse load `%>%` for you automatically, so you don’t usually load `magrittr` explicitly. 
+
+The point of the pipe is to help you write code in a way that is easier to read and understand. 
+
+```{r}
+# without piping
+filter(.data = diamonds, 
+       price > 12000) 
+
+# with piping
+diamonds %>%
+  filter(price >12000)
+```
+
+This can be particularly useful when you want to do multiple operations. 
+
+```{r}
+#Most efficient way
+#prints out diamonds that are more than $12000, have colors D and E, and only prints out four columns
+diamonds %>%
+  filter(price > 12000) %>%
+  filter(color == "D" | color == "E") %>%
+  select(carat, cut, color, price)
+```
+
+
+
+## `summarize()` and `group_by()`
+
+```{r}
+
+diamonds %>%
+  summarize(mean.price = mean(price))
+
+diamonds %>%
+  group_by(color) %>%
+  summarize(mean.price = mean(price))
+
+
+diamonds %>%
+  group_by(color, cut) %>%
+  summarize(mean.price = mean(price),
+            max.price = max(price),
+            min.price = min(price),
+            count = n())
+```
+
+## Challenge: 
+
+Identify the most expensive diamond with greater than 2 carats, that doesn't belong to the "worst" 2 colors.
+
+```{r}
+#many possible different answers (see Slack)
+diamonds %>%
+  filter(carat > 2) %>%
+  filter(color != "I",color != "J") %>%
+  filter(price == max(price))
+```
+
+
+# ![](https://github.com/rstudio/hex-stickers/blob/master/PNG/tidyr.png?raw=true){width=50px} `tidyr` 
+
+
+The goal of tidyr is to help you create tidy data. Tidy data is data where:
+
+- Every column is variable.
+- Every row is an observation..
+- Every cell is a single value.
+
+Wide Data and Long Data: 
+
+![](https://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig1.png)
+
+```{r}
+#if you haven't already run install.packages("tidyr"), you only need to do this once
+
+#load in the tidyr package, you need to do this once in each .Rmd you plan to use these commands for
+library("tidyr")
+```
+
+```{r}
+#create a wide dataset 
+set.seed(1)
+stocks_wide <- data.frame(
+   time = as.Date('2009-01-01') + 0:9,
+   X = rnorm(10, 20, 1),
+   Y = rnorm(10, 20, 2),
+   Z = rnorm(10, 20, 4)
+ )
+stocks_wide
+```
+
+## `gather()` is used to convert from wide to long
+
+```{r}
+# gather(.data = data, key, value)
+# OR
+# data %>%  
+#   gather(key = "key", value = "value")
+stocks_long <- stocks_wide %>% 
+  gather(key=stock, value=price, X, Y, Z)
+
+stocks_long
+```
+
+## `spread()` reshapes long data into wide
+```{r}
+# spread(.data=data, key, value)
+# OR
+# data %>% 
+#     spread(key, value)
+
+stocks_back_to_wide <- stocks_long %>% 
+  spread(key=stock, value= price)
+
+stocks_back_to_wide
+```
+
+
+These commands can be utilized in conjunction with the `dplyr` commands were were discussing previously. 
+```{r}
+#Ex: 
+stocks_wide %>% 
+   gather(stock,price,X:Z)%>% 
+   group_by(stock) %>% 
+   summarise(min = min(price), max = max(price))
+
+```
+
+There are other similar functions available. 
+
+## `separate()` splits a single variable into two
+```{r}
+#separate(data, col, into, sep)
+
+#to split up date
+stocks_wide <- stocks_wide %>% 
+  separate(time,c("year", "month", "day"), sep="-")
+
+stocks_wide
+
+```
+
+## `unite()` merges two variables into one
+```{r}
+#unite(data, col, sep)
+stocks_wide <- stocks_wide %>% 
+  unite(time,c("year", "month", "day"), sep=" ")
+
+stocks_wide
+```
+
+
+
+# ![](https://github.com/rstudio/hex-stickers/blob/master/PNG/stringr.png?raw=true){width=50px} `stringr` 
+
+The `stringr` package provide a set of functions designed to make working with strings as easy as possible. 
+
+### RStudio's `stringr` cheatsheet
+[https://github.com/rstudio/cheatsheets/raw/master/strings.pdf](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)

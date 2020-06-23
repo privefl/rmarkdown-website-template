@@ -1,0 +1,122 @@
+---
+title: 'MATH 216 - Notes: Web Scraping'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    fig_crop: yes
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+# Web scraping: Something exists on the web, and I want it.
+
+Often times you will see data posted on the web (in a Wikipedia page, etc.) but it may not be readily available to download as a .csv file. You can use the `rvest` packages to "scrape" the information from the web and import it into R. 
+
+```{r}
+#install.packages('rvest')
+library(rvest)
+```
+
+# Example: Volcanos
+
+```{r}
+#Scrape volcano data
+volcano.url <- "https://www.ngdc.noaa.gov/nndc/struts/results?type_0=Like&query_0=&op_8=eq&v_8=&type_10=EXACT&query_10=None+Selected&le_2=&ge_3=&le_3=&ge_2=&op_5=eq&v_5=&op_6=eq&v_6=&op_7=eq&v_7=&t=102557&s=5&d=5"
+
+volcano.data <- volcano.url %>%
+  read_html() %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table()
+```
+
+We can use all our usual tools: 
+```{r}
+library(tidyverse)
+
+tall.volcano.data <- volcano.data %>% 
+  filter(Elev > 3000)
+```
+
+Let's preview the data: 
+```{r}
+head(tall.volcano.data)
+```
+
+
+We can even create maps with the data: 
+```{r}
+#load in world map from rnaturalearth
+library(rnaturalearth)
+world <- ne_countries(scale = 'medium', type = 'map_units',returnclass = 'sf')
+
+#plot the world map
+ggplot() + 
+  geom_sf(data = world) + 
+  geom_point(data = tall.volcano.data, aes(x = Longitude, y = Latitude), pch = 19, size=0.5, col="darkred") + 
+  theme_light() +
+  ggtitle("Map of Tall Volcanos") 
+```
+
+ 
+
+# Example: State Populations
+
+```{r}
+pop.url <- "https://en.wikipedia.org/wiki/List_of_states_and_territories_of_the_United_States_by_population"
+
+pop.data <- pop.url %>%
+  read_html() %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table()
+```
+
+Unfortunately, this "scrape" isn't as clean to work with in R. Let's manipulate it so it's a bit easier to work with. 
+
+```{r}
+#only columns we need
+pop.data <- pop.data[,c(1:3,10)]
+```
+
+```{r}
+#Rename column 1
+colnames(pop.data)[1] <- "NAME"
+```
+
+```{r}
+#rename Column 3
+colnames(pop.data)[3] <- "Population"
+
+#Remove all commas in numbers
+pop.data$Population <- str_replace_all(pop.data$Population, ",", "")
+
+#Convert these to numbers
+pop.data$Population <- as.numeric(pop.data$Population)
+```
+
+
+```{r}
+#rename Column 4
+colnames(pop.data)[4] <- "GeographicSort"
+```
+
+
+```{r}
+#only rows we need
+pop.data <- pop.data %>% 
+  filter(GeographicSort != "Terr.")
+```
+
+Let's preview the data: 
+```{r}
+head(pop.data)
+```
+
+Again, we can use all our usual tools to manipulate, summarize, and plot our data. 
+
+# What if it's not a html table? 
+
+You can use `rvest` to scrape data that isn't in table format. It gets trickier and is best left to those that are vaguely familar with html code. Here is a cool tutorial for those interested: [https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/](https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/)
+

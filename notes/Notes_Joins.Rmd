@@ -1,0 +1,122 @@
+---
+title: 'MATH 216 - Notes: Joins'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    fig_crop: yes
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+
+## Recall our State Population Data: 
+
+```{r}
+pop.url <- "https://en.wikipedia.org/wiki/List_of_states_and_territories_of_the_United_States_by_population"
+
+pop.data <- pop.url %>%
+  read_html() %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table()
+
+#only columns we need
+pop.data <- pop.data[,c(1:3,10)]
+#Rename column 1
+colnames(pop.data)[1] <- "NAME"
+#rename Column 3
+colnames(pop.data)[3] <- "Population"
+#Remove all commas in numbers
+pop.data$Population <- str_replace_all(pop.data$Population, ",", "")
+#Convert these to numbers
+pop.data$Population <- as.numeric(pop.data$Population)
+#rename Column 4
+colnames(pop.data)[4] <- "GeographicSort"
+#only rows we need
+pop.data <- pop.data %>% 
+  filter(GeographicSort != "Terr.")
+```
+
+Let's preview the data: 
+```{r}
+head(pop.data)
+```
+
+Suppose we wanted to create a map with data. We would need to combine together our map data with our population data. 
+```{r}
+#recall our states map data from the maps package
+library(maps)
+states_map <- map_data("state")
+```
+
+In order to create a plot with both the population data AND the map, we will need to combine the two datasets together.
+
+There should be some column which the two datasets have in common (the "key")
+
+```{r}
+#the joins functions are in the dplyr package 
+#you should already have it installed when you installed the tidyverse package
+population_map <- left_join(states_map, pop.data, by = c("region"="NAME"))
+```
+
+Whoops! It didn't work. Why not? 
+
+`states_map` has the state names (`region`) with all lowercase letters and `pop.data` has the first letter of the state names (`NAME`) capitalized. 
+
+It's easy to fix this using the `tolower()` function. 
+```{r}
+pop.data$NAME <- tolower(pop.data$NAME)
+```
+
+Let's try re-running our code again: 
+
+```{r}
+population_map <- left_join(states_map, pop.data, by = c("region"="NAME"))
+```
+
+It worked! Check out the data. 
+
+```{r}
+head(population_map)
+```
+
+
+```{r}
+# Create the map
+ggplot(population_map, aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = Population), color = "black") +
+  coord_fixed(ratio = 1)+
+  theme_light() + 
+  ggtitle("USA, Population by State")
+```
+
+
+# Left, Right, Inner and Outer Joins
+
+Did you notice that `pop.data` had additional values under `NAME` (like west and south atlantic ) that weren't a part of `map_data`? Where did they go? 
+
+We used a left join. This means that we keep all the values in for state names from the left table `map_data` and if there is a match from the `pop.data` it gets added. 
+
+Below is a nice visualization of left, right, inner, and outer joins. 
+
+![](https://cdn.mindmajix.com/blog/images/db-01_2119.png){width=300px}
+
+![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSVwGvE91jxzPzDAnaemRly2hppYJ4sJGl-31cEG6Kf6_kFy71i&usqp=CAU){width=300px}
+
+
+There are other kinds of joins (`semi_join()`, `full_join()`, etc.) if you want to learn more about them. 
+
+This URL provides some really nice demonstrations of all kinds of joins in R: (https://stat545.com/join-cheatsheet.html)[https://stat545.com/join-cheatsheet.html]
+
+# Common Issues with Joining
+
+- duplicate keys
+- lowercase/uppercase 
+- symbols or whitespace
+- Make sure the join fields are the same format. 

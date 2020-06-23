@@ -1,0 +1,159 @@
+---
+title: 'MATH 216 - Notes: Visualization Customization'
+author: "Emily Malcolm-White"
+date: "03/11/2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+# Load Packages, Import Data and Plot
+
+```{r}
+library(tidyverse)
+# Tooth Growth Dataset is built in to tidyverse
+# The Effect of Vitamin C on Tooth Growth in Guinea Pigs
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+head(ToothGrowth)
+# len - tooth length
+# supp - supplement type (VC or OJ)
+# dose - dose in mg (0.5,1,2)
+```
+
+
+```{r}
+p <- ggplot(ToothGrowth, aes(x=dose, y=len)) + geom_boxplot()
+p
+```
+
+
+# Y-axis
+
+## Transformations
+
+`scale_x_log10()`, `scale_y_log10()` : for log10 transformation
+`scale_x_sqrt()`, `scale_y_sqrt()`: for sqrt transformation
+`scale_x_reverse()`, `scale_y_reverse()`: to reverse coordinates
+`coord_trans(x =“log10”, y=“log10”)` : possible values for x and y are “log2”, “log10”, “sqrt”, …
+`scale_x_continuous(trans=‘log2’)`, `scale_y_continuous(trans=‘log2’)` : another allowed value for the argument trans is ‘log10’
+
+
+```{r}
+p + scale_y_log10()
+```
+
+Better than using `mutate` (see the difference in the axes... )
+
+```{r}
+ToothGrowth %>% 
+  mutate(log_len = log(len)) %>% 
+  ggplot(aes(x=dose, y=log_len)) + geom_boxplot()
+```
+
+
+## Change position of tick marks (continuous axis)
+
+```{r}
+# Set tick marks on y axis
+# a tick mark is shown on every 5
+p + scale_y_continuous(breaks=seq(0,40,5))
+
+# Tick marks can be spaced randomly
+p + scale_y_continuous(breaks=c(5,7.5, 20, 25))
+                     
+# Remove tick mark labels and gridlines
+p + scale_y_continuous(breaks=NULL)
+```
+
+
+## Changing formatting (dollar, scientific, comma, percent)
+
+```{r}
+library(scales)
+p + scale_y_continuous(labels = scientific)
+
+# other options are `dollar`, `percent`, `comma`
+```
+
+# X axis
+
+## Change tick mark labels (discrete axis)
+
+```{r}
+# Solution 1
+p + scale_x_discrete(breaks=c("0.5","1","2"),
+        labels=c("Dose 0.5", "Dose 1", "Dose 2"))
+
+# Solution 2 : same plot as solution 1
+#p + scale_x_discrete(labels=c("0.5" = "Dose 0.5", "1" = "Dose 1", "2" = "Dose 2"))
+```
+
+## Change labels (dates)
+
+```{r}
+
+#Create time series data
+df <- data.frame(
+  date = seq(Sys.Date(), len=100, by="1 day")[sample(100, 50)],
+  price = runif(50)
+)
+df <- df[order(df$date), ]
+
+
+#Example plot
+dp <- ggplot(df, aes(x=date, y=price)) + geom_line()
+dp
+```
+
+```{r}
+dp + scale_x_date(labels = date_format("%m/%d")) +
+  theme(axis.text.x = element_text(angle=45))
+# Format : Week
+dp + scale_x_date(labels = date_format("%W"))
+# Months only
+dp + scale_x_date(breaks = date_breaks("months"),
+  labels = date_format("%b"))
+```
+
+We will spend some more time talking about dates soon... 
+
+# Change the appearance text (font, face, colour, size, angle) 
+
+`family` : font family
+`face` : font face. Possible values are “plain”, “italic”, “bold” and “bold.italic”
+`colour` : text color
+`size` : text size in pts
+`angle` : angle (in [0, 360])
+
+```{r}
+p + theme(axis.text.x = element_text(face="bold", color="#993333", 
+                           size=14, angle=45),
+          axis.text.y = element_text(face="bold", color="#993333", 
+                           size=14, angle=45))
+```
+
+# Change the appearance of other elements 
+
+```{r}
+ # theme(plot.title=element_text(size=20, 
+ #                                  face="bold", 
+ #                                    family="American Typewriter",
+ #                                    color="tomato",
+ #                                    hjust=0.5,
+ #                                    lineheight=1.2),  # title
+ #            plot.subtitle=element_text(size=15, 
+ #                                       family="American Typewriter",
+ #                                       face="bold",
+ #                                       hjust=0.5),  # subtitle
+ #            plot.caption=element_text(size=15),  # caption
+ #            axis.title.x=element_text(vjust=10,  
+ #                                      size=15),  # X axis title
+ #            axis.title.y=element_text(size=15),  # Y axis title
+ #            axis.text.x=element_text(size=10, 
+ #                                     angle = 30,
+ #                                     vjust=.5),  # X axis text
+ #            axis.text.y=element_text(size=10))  # Y axis text
+```
+

@@ -1,0 +1,431 @@
+---
+title: 'MATH 216 - Notes: Maps'
+author: "Emily Malcolm-White"
+output: 
+  html_document:
+    fig_crop: yes
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+These notes will outline: 
+
+- how to plot maps
+- how to add labels to maps
+- how to add data to maps
+
+There have been several different iterations of how to create maps over the years. We will be using `sf` and `geom_sf`. `sf` stands for simple feature.  The `sf` packages is a set of tools for working with geospacital vectors (points, lines, polygons, etc). We won't be talking about the specifics of these too much but if you are into GIS and want to learn more about how these objects are constructed this blog post might help: [https://www.jessesadler.com/post/simple-feature-objects/](https://www.jessesadler.com/post/simple-feature-objects/)
+
+```{r, message=F}
+library(tidyverse)
+
+### You will need to run install.packages("package name") if this is the first time you have used these packages
+
+#install.packages("sf") - note some students are getting a pop-up when they install the sf package for the first time. Select the "no" option when it pops up in your console. 
+library(sf)
+
+#install.packages("maps")
+library(maps)
+
+#some students are needing into install the rgeos package seperately as well
+#library(rgeos)
+```
+
+
+# North Carolina
+
+For our first example, we will be working with a dataset of North Carolina that is built in to the `sf` package. 
+
+```{r, results=F, warnings=F}
+#to pull in the North Caroline Dataset
+demo(nc, ask = FALSE, echo = FALSE)
+```
+
+You should notice that the `nc` dataset is now saved in your R environment. This dataset contains information about Sudden Infant Death Syndrome (SIDS) for North Carolina counties, over two time periods (1974-78 and 1979-84). Let's take a look at that dataset. 
+
+Each row represents a county in North Carolina. This data frame contains the following columns:
+
+- `AREA` County polygon areas in degree units
+- `PERIMETER` County polygon perimeters in degree units
+- `CNTY_` Internal county ID
+- `NAME` County names
+- `FIPS` County ID
+- `FIPSNO` County ID
+- `CRESS_ID` Cressie papers ID
+- `BIR74` births, 1974-78
+- `SID74` SID deaths, 1974-78
+- `NWBIR74` non-white births, 1974-78
+- `BIR79` births, 1979-84
+- `SID79` SID deaths, 1979-84
+- `NWBIR79` non-white births, 1979-84
+- `geom`  information needed to plot the map for each county
+
+Let's begin by simply plotting the map. 
+
+```{r fig.margin=F}
+ggplot() + 
+  geom_sf(data = nc) 
+```
+
+Let's pretty it up. 
+
+```{r}
+ggplot() + 
+  geom_sf(data = nc, col="black", fill="darkgrey") + 
+  theme_light() +
+  ggtitle("North Carolina Counties")
+
+#Remember the other theme options: theme_grey(), theme_bw(), theme_dark(), theme_minimal(), theme_classic(), theme_void()
+```
+
+Suppose we want to shade each of these counties, based on the number of births in 1974. 
+```{r}
+ggplot() +
+  geom_sf(data = nc, aes(fill = BIR74), col = "black") +
+  theme_light()+
+  ggtitle("North Carolina, Birth Rates in 1974")
+```
+
+Here are some options to customize the plot that you might be interested in. 
+
+
+```{r}
+ggplot() + 
+  geom_sf(data=nc) + 
+  aes(fill = BIR74) +
+  geom_sf_text(data = nc[nc$BIR74 > 15000,], aes(label = NAME), fontface="bold") + # add name labels
+  scale_fill_gradientn(colors = c('red','yellow')) + #customize colors
+  theme_light() +
+  ggtitle("3 Counties in North Carolina, Birth Rates in 1974")
+```
+
+
+
+# Color Brewer
+
+There are different color palettes available in the `RColorBrewer` package.
+
+```{r fig.height=10}
+library(RColorBrewer)
+display.brewer.all()
+```
+
+A note about customizing colors: 
+
+- you should use a color scheme that is sequential (has order to it), when you are displaying continuous data
+- you should use a color scheme that is categorical, when your data is in categories and isn't ordered
+- you should use a color scheme that is diverging, when want to put emphasis on two extremes and mid-range. For example, you might use a diverging palette from red to blue for political party affiliation in the US. 
+- pay attention to your map being color blind friendly (`RdYlGr` is the worst...)
+- as a general rule, try not to use blue to represent a land mass (let's reserve that for bodies of water)
+
+```{r, fig.height=7}
+display.brewer.all(type="all", colorblindFriendly=TRUE)
+```
+
+
+You can break up sequential or diverging palettes into a fixed number of colors using `brewer.pal`. 
+
+```{r}
+brewer.pal(11, "Spectral")
+display.brewer.pal(11, "Spectral")
+display.brewer.pal(8, "Spectral")
+display.brewer.pal(4, "Spectral")
+```
+
+For example, 
+
+```{r}
+ggplot() + 
+  geom_sf(data=nc) + 
+  aes(fill = BIR74) +
+  ggtitle("North Carolina, Birth Rates in 1974") +
+  scale_fill_gradientn(colors = brewer.pal(8, "Spectral") ) +  #customize colors
+  theme_light()
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data=nc) + 
+  aes(fill = BIR74) +
+    ggtitle("North Carolina, Birth Rates in 1974") +
+  scale_fill_gradientn(colors = brewer.pal(11, "Spectral")[5:11] )  #customize colors
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data=nc) + 
+  aes(fill = BIR74) +
+  ggtitle("North Carolina, Birth Rates in 1974") +
+  scale_fill_gradientn(colors = c("yellow", "orange", "red") ) #customize colors
+```
+
+
+# Using `rnaturalearth`
+
+`Rnaturalearth` contains information to map all the countries in the world (among other things). To get out this country data we use `ne_countries`. We can also use `ne_states` to get state data. To plot the map using this package, we will use `geom_sf`. 
+
+```{r}
+library(rnaturalearth)
+library(rnaturalearthdata)
+```
+
+To download the world data from the `rnaturalearth` package. 
+
+```{r}
+#don't worry too much about where each of the arguements come from (unless you want to)
+world <- ne_countries(scale = 'medium', type = 'map_units',returnclass = 'sf')
+```
+
+
+A plot of the world... 
+```{r}
+ggplot() + 
+  geom_sf(data = world) + 
+  theme_light() +
+  ggtitle("World Map, using rnaturalearth") 
+```
+
+
+
+
+## Countries and Continents
+
+You can subset the data by continent or by country. 
+
+### Canada
+
+```{r}
+canada <- world %>% 
+  filter(name == 'Canada')
+
+ggplot() + 
+  geom_sf(data = canada) + 
+  ggtitle("Canada") +
+  theme_light() 
+```
+
+A note about projections:
+
+There are lots of different ways to ``flatten" the earth (projections).
+
+`coord_sf` will help us change the coordinate system, which includes both projection and extent of the map: 
+
+- By default, `maps` uses `WGS84` as the coordinate reference system (longitude/latitude). Using the argument `crs`, it is possible to override this setting. (more later)
+- `xlim` and `ylim` allow us to crop the map to any area of the world we like. Note that `xlim` is the latitude and `ylim` is the longitude. 
+
+
+```{r}
+ggplot() + 
+  geom_sf(data = canada) + 
+  coord_sf(crs=st_crs(3347)) ## change to Lambert Projection
+  ggtitle("Canada") +
+  theme_light() 
+```
+
+### Europe
+
+```{r}
+europe <- world %>% 
+  filter(continent == 'Europe')
+
+ggplot() + 
+  geom_sf(data = europe) + 
+  ggtitle("Europe") +
+  theme_light()
+
+ggplot() + 
+  geom_sf(data = europe) + 
+  theme_light() +
+  ggtitle("Europe, Cropped") +
+  coord_sf(xlim = c(-30,60), ylim = c(35,70))  
+```
+
+### USA
+
+```{r}
+usa <- world %>% 
+  filter(name == 'United States')
+
+ggplot() + 
+  geom_sf(data = usa) + 
+  ggtitle("USA") +
+  theme_light() 
+```
+
+
+```{r}
+ggplot() + 
+  geom_sf(data = usa) + 
+  theme_light() +
+  coord_sf(xlim = c(-130, -65), ylim = c(20, 50)) +
+  ggtitle("Continental USA") 
+```
+
+
+## Adding Points
+
+```{r}
+library(nycflights13)
+```
+
+Note that this library contains a dataset called `airports` which lists all the airports and their latitudes and longitudes. 
+
+```{r}
+head(airports)
+```
+
+Let's try plotting each of the airports on the map.
+
+```{r}
+ggplot() + 
+  geom_sf(data = usa) + 
+  theme_light() + 
+  geom_point(data = airports, aes(x = lon, y = lat), pch = 19, size=0.5) +
+  coord_sf(xlim = c(-130, -65),
+           ylim = c(20, 50))
+```
+
+Let's try color coding them by the time zone they are in. 
+
+```{r}
+ggplot() + 
+  geom_sf(data = usa) + 
+  theme_light() + 
+  geom_point(data = airports, aes(x = lon, y = lat, col=tzone), pch = 19, size=0.5) +
+  coord_sf(xlim = c(-130, -65),
+           ylim = c(20, 50))
+```
+
+
+
+# Using `maps`
+
+The `maps` package contains several built in maps: world (for all countries in the world), france, italy, nz, usa, state (usa state boundaries), and county (usa counties). 
+
+To reference each map you use `map_data("mapname")`. Rather than use `geom_sf` map data in this format needs to be mapped using `geom_polygon`. 
+
+```{r}
+world_map <- map_data("world")
+
+ggplot(world_map, aes(long, lat)) + 
+  geom_polygon(aes(group=group),fill="lightgrey", col="black") + 
+  theme_light()
+```
+
+
+You can subset the data from particular country/counties.  
+
+## USA
+
+Load the data:
+```{r}
+usa <- map_data("world", region = "usa")
+```
+
+Plot the data: 
+```{r}
+ggplot(usa, aes(long, lat)) + 
+  geom_polygon(aes(group=group), fill="darkgrey",col="black") + 
+  coord_fixed(ratio = 1) +
+  theme_light() +
+  theme(legend.position = "none") +
+  coord_sf(xlim = c(-130, -65), ylim = c(20, 50)) 
+```
+
+Note the `aes(group=group)` option. This is SUPER IMPORTANT, so R knows which things to connect together. Otherwise, the graph would look like this: 
+```{r}
+ggplot(usa, aes(long, lat)) + 
+  geom_polygon(fill="darkgrey",col="black") + 
+  coord_fixed(ratio = 1) + #maintain aspect ratio
+  theme_light() + 
+  theme(legend.position = "none") +
+  coord_sf(xlim = c(-130, -65), ylim = c(20, 50)) 
+```
+
+Also when using maps the `coord_fixed(ratio = 1)` is also super important so the aspect ratio is maintained (a country may appear super stretched or squished). This isn't too bad for the USA, but for a longer skinnier country like Italy this can get pretty wonky. 
+
+```{r}
+italy <- map_data("world", region = "Italy")
+```
+
+```{r}
+# ASPECT RATIO NOT MAINTAINED
+ggplot(italy, aes(long, lat)) + 
+  geom_polygon(aes(group=group), fill="darkgrey",col="black") + 
+  theme_light() +
+  theme(legend.position = "none") +
+  ggtitle("Italy - Aspect Ratio Not Maintained (not good)")
+```
+
+```{r}
+# ASPECT RATIO MAINTAINED
+ggplot(italy, aes(long, lat)) + 
+  geom_polygon(aes(group=group), fill="darkgrey",col="black") + 
+  coord_fixed(ratio = 1) +
+  theme_light() +
+  theme(legend.position = "none") +
+  ggtitle("Italy - Aspect Ratio Maintained (better)")
+```
+
+
+
+## EU
+
+Create a dataset with most European countries:
+```{r}
+some.eu.countries <- c(
+  "Portugal", "Spain", "France", "Switzerland", "Germany",
+  "Austria", "Belgium", "UK", "Netherlands",
+  "Denmark", "Poland", "Italy", 
+  "Croatia", "Slovenia", "Hungary", "Slovakia",
+  "Czech republic"
+)
+
+europe <- map_data("world", region = some.eu.countries)
+```
+
+```{r}
+ggplot(europe, aes(long, lat)) + 
+  geom_polygon(aes( group=group, fill=region), col="black") + 
+  coord_fixed(ratio = 1) +
+  theme_light() + 
+  theme(legend.position = "none") 
+```
+
+
+## USA - Adding Data from another dataset
+
+```{r}
+# Prepare the USArrests data
+arrests <- USArrests 
+arrests$region <- tolower(rownames(USArrests))
+head(arrests)
+```
+
+```{r}
+# Retrieve the states map data and merge with crime data
+states_map <- map_data("state")
+arrests_map <- left_join(states_map, arrests, by = "region") #we will talk alot more about joins in one of the coming modules
+head(arrests_map)
+```
+
+```{r}
+# Create the map
+ggplot(arrests_map, aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = Murder), color = "black") +
+  coord_fixed(ratio = 1)+
+  theme_light() + 
+  ggtitle("USA, Murders By State")
+```
+
+
+# More
+
+There are all kinds of packages for working with maps in different ways that we didn't discuss. There are all kinds of things you can do with maps that we haven't discussed - plotting roads, water (lakes, rivers...), railways, etc. 
+
+You may want to check out: 
+
+- [https://timogrossenbacher.ch/2016/12/beautiful-thematic-maps-with-ggplot2-only/](https://timogrossenbacher.ch/2016/12/beautiful-thematic-maps-with-ggplot2-only/)
+
+- [Tutorial Part 1](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html), [Part 2](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)

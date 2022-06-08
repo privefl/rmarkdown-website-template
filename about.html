@@ -11,7 +11,7 @@
 
 
 
-<title>About me</title>
+<title>Papaya</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -243,7 +243,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">YOURNAME</a>
+      <a class="navbar-brand" href="index.html">REEU Practice Site</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -251,21 +251,14 @@ $(document).ready(function () {
   <a href="index.html">
     <span class="fa fa-home"></span>
      
-    Home
+    Rice Data
   </a>
 </li>
 <li>
   <a href="about.html">
     <span class="fa fa-user"></span>
      
-    About
-  </a>
-</li>
-<li>
-  <a href="cv.html">
-    <span class="fa fa-file-pdf-o"></span>
-     
-    CV
+    Papaya
   </a>
 </li>
 <li>
@@ -300,14 +293,281 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About me</h1>
+<h1 class="title toc-ignore">Papaya</h1>
 
 </div>
 
 
-<div id="header" class="section level2">
-<h2>Header</h2>
-<p>Say more about you here.</p>
+<p>This data represents the papaya germplasm collection in Hilo. The
+data can be used to classify or organize the different germplasm.</p>
+<pre class="r"><code>Phen&lt;-read.csv(&quot;Papaya_germplasm_collection.csv&quot;)
+####what are the column headings
+names(Phen) #names of columns</code></pre>
+<pre><code>##  [1] &quot;Plant.ID&quot;                  &quot;FRUIT.DIAMETER&quot;           
+##  [3] &quot;FRUIT.LENGTH&quot;              &quot;FRUIT.WEIGHT&quot;             
+##  [5] &quot;PUNCTURE.TEST&quot;             &quot;SEED.CAVITY.LENGTH&quot;       
+##  [7] &quot;SEED.CAVITY.WIDTH&quot;         &quot;TOTAL.SOLUBLE.SOLIDS&quot;     
+##  [9] &quot;CHROMAMETER.FLESH.COLOR.A&quot; &quot;CHROMAMETER.FLESH.COLOR.B&quot;
+## [11] &quot;CHROMAMETER.FLESH.COLOR.L&quot; &quot;CHROMAMETER.SKIN.COLOR.A&quot; 
+## [13] &quot;CHROMAMETER.SKIN.COLOR.B&quot;  &quot;CHROMAMETER.SKIN.COLOR.L&quot; 
+## [15] &quot;FRUIT.SHAPE&quot;               &quot;BLOSSOM.END.DEFECT&quot;       
+## [17] &quot;BLOSSOM.END.SHAPE&quot;         &quot;FRUIT.FLESH.COLOR&quot;        
+## [19] &quot;FRUIT.FRECKLING&quot;           &quot;FRUIT.NECK&quot;               
+## [21] &quot;FRUIT.RIDGE&quot;               &quot;FRUIT.WAX&quot;                
+## [23] &quot;INTERIOR.FRUIT.GROWTH&quot;     &quot;PULP.AROMA&quot;               
+## [25] &quot;SEED.CAVITY.SHAPE&quot;         &quot;SEED.COLOR&quot;               
+## [27] &quot;SEED.TEXTURE&quot;              &quot;VISUAL.SKIN.COLOR&quot;</code></pre>
+<pre class="r"><code>str(Phen) #what type of variable is each column, numeric, factor, integer </code></pre>
+<pre><code>## &#39;data.frame&#39;:    70 obs. of  28 variables:
+##  $ Plant.ID                 : chr  &quot;HCAR_7&quot; &quot;HCAR8&quot; &quot;HCAR9&quot; &quot;HCAR10&quot; ...
+##  $ FRUIT.DIAMETER           : num  12.3 10.6 12.5 11.3 8.5 ...
+##  $ FRUIT.LENGTH             : num  26 14.4 13.4 13.4 12.8 ...
+##  $ FRUIT.WEIGHT             : num  1756 756 1061 766 456 ...
+##  $ PUNCTURE.TEST            : num  5.6 7 7.2 8.6 11.6 9 9.45 5.4 6.2 8 ...
+##  $ SEED.CAVITY.LENGTH       : num  21 9 8.3 9 7.9 ...
+##  $ SEED.CAVITY.WIDTH        : num  6.3 5.4 7.5 5.3 3.85 8.4 5.7 5 7.8 6.5 ...
+##  $ TOTAL.SOLUBLE.SOLIDS     : num  10 11.6 10.2 11 13.2 8.7 8.25 11.8 10.6 7.9 ...
+##  $ CHROMAMETER.FLESH.COLOR.A: num  NA NA NA NA 10.1 ...
+##  $ CHROMAMETER.FLESH.COLOR.B: num  NA NA NA NA 46.6 NA 38.9 31.8 NA NA ...
+##  $ CHROMAMETER.FLESH.COLOR.L: num  NA NA NA NA 71.8 NA 67.1 49.9 NA NA ...
+##  $ CHROMAMETER.SKIN.COLOR.A : num  NA NA NA NA -1.95 ...
+##  $ CHROMAMETER.SKIN.COLOR.B : num  NA NA NA NA 60.4 NA 62.8 54 NA NA ...
+##  $ CHROMAMETER.SKIN.COLOR.L : num  NA NA NA NA 66.7 NA 65.6 59.3 NA NA ...
+##  $ FRUIT.SHAPE              : chr  NA NA NA NA ...
+##  $ BLOSSOM.END.DEFECT       : chr  &quot;NORMAL&quot; &quot;NORMAL&quot; &quot;NORMAL&quot; &quot;NORMAL&quot; ...
+##  $ BLOSSOM.END.SHAPE        : chr  &quot;POINTED_BLOSSOM_END&quot; &quot;ROUNDED_BLOSSOM_END&quot; &quot;ROUNDED_BLOSSOM_END&quot; &quot;ROUNDED_BLOSSOM_END&quot; ...
+##  $ FRUIT.FLESH.COLOR        : chr  &quot;ORANGE/YELLOW&quot; &quot;ORANGE/YELLOW&quot; &quot;YELLOW&quot; &quot;ORANGE/YELLOW&quot; ...
+##  $ FRUIT.FRECKLING          : chr  &quot;MILD&quot; &quot;MILD&quot; &quot;SEVERE&quot; &quot;MODERATE&quot; ...
+##  $ FRUIT.NECK               : chr  &quot;NECK_PRESENT&quot; &quot;NECK_ABSENT&quot; &quot;NECK_ABSENT&quot; &quot;NECK_ABSENT&quot; ...
+##  $ FRUIT.RIDGE              : chr  &quot;SMOOTH&quot; &quot;SMOOTH&quot; &quot;DISTINCT_RIDGES&quot; &quot;DISTINCT_RIDGES&quot; ...
+##  $ FRUIT.WAX                : chr  &quot;YES&quot; &quot;YES&quot; NA NA ...
+##  $ INTERIOR.FRUIT.GROWTH    : chr  &quot;NO&quot; &quot;NO&quot; &quot;NO&quot; &quot;NO&quot; ...
+##  $ PULP.AROMA               : chr  &quot;MILD&quot; &quot;MILD&quot; &quot;MILD&quot; &quot;MILD&quot; ...
+##  $ SEED.CAVITY.SHAPE        : chr  &quot;5_ARMED_STAR&quot; &quot;5_ARMED_STAR&quot; &quot;ROUND&quot; &quot;ROUND&quot; ...
+##  $ SEED.COLOR               : chr  &quot;BLACK&quot; &quot;BLACK&quot; &quot;BLACK&quot; &quot;BLACK&quot; ...
+##  $ SEED.TEXTURE             : chr  &quot;SMOOTH&quot; &quot;SMOOTH&quot; &quot;SMOOTH&quot; &quot;SMOOTH&quot; ...
+##  $ VISUAL.SKIN.COLOR        : chr  &quot;GREEN/YELLOW&quot; &quot;YELLOW&quot; &quot;GREEN/YELLOW&quot; &quot;GREEN/YELLOW&quot; ...</code></pre>
+<pre class="r"><code>dim(Phen) #what are the dimensions of the dataset</code></pre>
+<pre><code>## [1] 70 28</code></pre>
+<pre class="r"><code>#Get data
+####Read in file
+###Need to know the directory where your data live
+
+gh&lt;-Phen$FRUIT.DIAMETER[2:17]
+
+gh2&lt;-gh*3
+
+plot(density(gh2), ylim=c(0,0.2), xlim=c(0,60))
+lines(density(gh), col=4)
+abline(v=13,col=&#39;red&#39;)
+abline(h=11,col=&#39;orange&#39;)</code></pre>
+<p><img src="about_files/figure-html/Lets%20get%20to%20know%20the%20data-1.png" width="672" /></p>
+<pre class="r"><code>rownames(Phen) &lt;- Phen[,1] ## set rownames
+Phen &lt;- Phen[, -1]          ## remove the first variable</code></pre>
+<pre class="r"><code>###Get summary statistics
+phen_sum&lt;-summary(Phen)
+
+###subset the data to only numeric variables
+Phen_num &lt;- Phen[, -c(14:27)]         
+str(Phen_num)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    70 obs. of  13 variables:
+##  $ FRUIT.DIAMETER           : num  12.3 10.6 12.5 11.3 8.5 ...
+##  $ FRUIT.LENGTH             : num  26 14.4 13.4 13.4 12.8 ...
+##  $ FRUIT.WEIGHT             : num  1756 756 1061 766 456 ...
+##  $ PUNCTURE.TEST            : num  5.6 7 7.2 8.6 11.6 9 9.45 5.4 6.2 8 ...
+##  $ SEED.CAVITY.LENGTH       : num  21 9 8.3 9 7.9 ...
+##  $ SEED.CAVITY.WIDTH        : num  6.3 5.4 7.5 5.3 3.85 8.4 5.7 5 7.8 6.5 ...
+##  $ TOTAL.SOLUBLE.SOLIDS     : num  10 11.6 10.2 11 13.2 8.7 8.25 11.8 10.6 7.9 ...
+##  $ CHROMAMETER.FLESH.COLOR.A: num  NA NA NA NA 10.1 ...
+##  $ CHROMAMETER.FLESH.COLOR.B: num  NA NA NA NA 46.6 NA 38.9 31.8 NA NA ...
+##  $ CHROMAMETER.FLESH.COLOR.L: num  NA NA NA NA 71.8 NA 67.1 49.9 NA NA ...
+##  $ CHROMAMETER.SKIN.COLOR.A : num  NA NA NA NA -1.95 ...
+##  $ CHROMAMETER.SKIN.COLOR.B : num  NA NA NA NA 60.4 NA 62.8 54 NA NA ...
+##  $ CHROMAMETER.SKIN.COLOR.L : num  NA NA NA NA 66.7 NA 65.6 59.3 NA NA ...</code></pre>
+<pre class="r"><code>##impute missing data
+library(missMDA) #contains imputation function
+completed_phen_num         &lt;-imputePCA(Phen_num) #imputation function
+pap_phen_num_scale &lt;- scale(completed_phen_num$completeObs) #take out the imputed data
+
+#look at all the numerical variables standardized
+boxplot(pap_phen_num_scale, 
+        ylab=&quot;Standarized value&quot;, main=&quot;Numeric Papaya data&quot;, #ylab changes y axis label, main changes label for the title
+        col = terrain.colors(13),xaxt = &quot;n&quot;)  
+
+# x axis with ticks for each box but without labels
+axis(1,1:13, labels = FALSE)
+
+##Create labels
+labels &lt;- colnames(Phen_num) # make a vector of column names called labels
+
+# Plot x labs at default x position
+text(x =  seq_along(labels), y = par(&quot;usr&quot;)[3]-1 , #par(&quot;usr&quot;) [3] gets the range of the  y axes in the plot.
+     srt = 35, adj = 1, #str is the angle of text, adj should the txt be on the x or y axis 
+     labels = labels, xpd = TRUE, cex= 0.5) #labels adds labels, xpd TRUE limit plotting to the figure and device region, cex is font size</code></pre>
+<p><img src="about_files/figure-html/Explore%20the%20data-1.png" width="672" /></p>
+<pre class="r"><code>###summerize the data
+library(dplyr) # contains funciton to summarise the data
+library(raster) #contains cv function
+library(plotrix) #contains standard error funciton
+
+##summarise a single numeric variable from the dataset
+summarise(Phen_num, avg = mean(FRUIT.DIAMETER), 
+          min = min(FRUIT.DIAMETER),
+          max = max(FRUIT.DIAMETER),
+          stan_dev = sd(FRUIT.DIAMETER),
+          coefficient_var = cv(FRUIT.DIAMETER),
+          stan_err = std.error(FRUIT.DIAMETER))</code></pre>
+<pre><code>##        avg min  max stan_dev coefficient_var  stan_err
+## 1 11.06571 1.2 19.5 3.980938        35.97543 0.4758131</code></pre>
+<pre class="r"><code>#lets summarise everything but it prints it out in strange format
+P_sum&lt;-summarise_all(Phen_num, funs(mean, min,max,sd,cv,std.error),na.rm=TRUE)</code></pre>
+<pre><code>## Warning: `funs()` was deprecated in dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<pre class="r"><code>#get dimension of the dataframe
+dim(P_sum)</code></pre>
+<pre><code>## [1]  1 78</code></pre>
+<pre class="r"><code>#we now want to create a dataframe that is readable
+library(tidyr) #reshape the data
+library(tidyselect) #package that contians functions that help reshape data
+
+P_stats_tidy &lt;- P_sum %&gt;% gather(stat, val) %&gt;% #%&gt;% is a piping opporator to take the output of one funciton and apply another function to it 
+  separate(stat, into = c(&quot;vaiable&quot;, &quot;stat&quot;), sep = &quot;_&quot;) %&gt;% #seperate the values by the 
+  spread(stat, val) 
+
+#write this dataframe to a new file
+write.csv(P_stats_tidy, &quot;Papaya_sum.csv&quot;) #directory where new file will be sent
+
+#####confidence interval
+library(gmodels) #contains function to do confidence intervals
+fr&lt;-Phen$FRUIT.DIAMETER
+CI_reg_95&lt;-ci(Phen$FRUIT.DIAMETER,0.99)</code></pre>
+<pre><code>## Warning in ci.numeric(Phen$FRUIT.DIAMETER, 0.99): No class or unkown class.
+## Using default calcuation.</code></pre>
+<pre class="r"><code>CI_reg_95</code></pre>
+<pre><code>##   Estimate   CI lower   CI upper Std. Error 
+## 11.0657143  9.8052965 12.3261321  0.4758131</code></pre>
+<pre class="r"><code>CI_7_95&lt;-ci(((Phen$FRUIT.DIAMETER)*7),0.95)</code></pre>
+<pre><code>## Warning in ci.numeric(((Phen$FRUIT.DIAMETER) * 7), 0.95): No class or unkown
+## class. Using default calcuation.</code></pre>
+<pre class="r"><code>CI_10_95  &lt;-ci(((Phen$FRUIT.DIAMETER)+10),0.95)</code></pre>
+<pre><code>## Warning in ci.numeric(((Phen$FRUIT.DIAMETER) + 10), 0.95): No class or unkown
+## class. Using default calcuation.</code></pre>
+<pre class="r"><code>#plot a CI one way
+library(psych) #contains error.bar function that plots confidence limits</code></pre>
+<pre><code>## 
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:plotrix&#39;:
+## 
+##     rescale</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
+<pre><code>## The following object is masked from &#39;package:raster&#39;:
+## 
+##     distance</code></pre>
+<pre class="r"><code>error.bars(Phen_num, xlab=&quot;&quot;, na.rm=TRUE, xaxt = &quot;n&quot;) </code></pre>
+<pre><code>## Warning in plot.window(...): &quot;na.rm&quot; is not a graphical parameter</code></pre>
+<pre><code>## Warning in plot.xy(xy, type, ...): &quot;na.rm&quot; is not a graphical parameter</code></pre>
+<pre><code>## Warning in title(...): &quot;na.rm&quot; is not a graphical parameter</code></pre>
+<pre><code>## Warning in axis(1, 1:z, names, ...): &quot;na.rm&quot; is not a graphical parameter</code></pre>
+<pre class="r"><code>##Create labels
+labels &lt;- colnames(Phen_num)
+
+# Plot x labs at default x position
+text(x =  seq_along(labels), y = par(&quot;usr&quot;)[3]-15 , srt = 35, adj = 1,
+     labels = labels, xpd = TRUE, cex= 0.5)</code></pre>
+<p><img src="about_files/figure-html/Make%20some%20summary%20graphics-1.png" width="672" /></p>
+<pre class="r"><code>###another way to create a graphic though inelegant
+library(ggplot2) #contains plotting funcitons
+library(Rmisc) #contains summary functions</code></pre>
+<pre><code>## Loading required package: plyr</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggpubr&#39;:
+## 
+##     mutate</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
+<pre class="r"><code>fd &lt;- summarySE(data=Phen_num,  measurevar = &quot;FRUIT.DIAMETER&quot;) 
+
+# Use 95% confidence intervals instead of SEM
+ggplot(fd, aes(x=&quot;name&quot;, y=FRUIT.DIAMETER)) + 
+  geom_bar(position=position_dodge(), stat=&quot;identity&quot;) +
+  geom_errorbar(aes(ymin=FRUIT.DIAMETER-ci, ymax=FRUIT.DIAMETER+ci),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9))                                            </code></pre>
+<p><img src="about_files/figure-html/Make%20some%20summary%20graphics-2.png" width="672" /></p>
+<pre class="r"><code>###Create graphic another way
+P_s_t&lt;-P_stats_tidy[-9,]
+
+
+ggplot(P_s_t, aes(x=vaiable, y=mean)) + 
+  geom_bar(position=position_dodge(), stat=&quot;identity&quot;) +
+  geom_errorbar(aes(ymin=(mean-(1.96*std.error)), ymax=(mean+(1.96*std.error))),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))</code></pre>
+<p><img src="about_files/figure-html/Make%20some%20summary%20graphics-3.png" width="672" /></p>
+<pre class="r"><code>###Create a graphic another way
+
+plot((density((Phen$FRUIT.DIAMETER)*7)),ylim=c(0,0.1))
+abline(v=c(70.8,84.1))
+
+lines((density((Phen$FRUIT.DIAMETER)+10)), col=&quot;blue&quot; )
+abline(v=c(20.1,22.01),col=&quot;blue&quot;)
+
+lines((density((Phen$FRUIT.DIAMETER))), col=&quot;red&quot; )
+abline(v=c(10.11,12.01),col=&quot;red&quot;)</code></pre>
+<p><img src="about_files/figure-html/Make%20some%20summary%20graphics-4.png" width="672" /></p>
+<pre class="r"><code>###look up critical value of t distribution
+qt(0.975, 3) # the output of this value is used for constructing the confidence interval or finding the p-value</code></pre>
+<pre><code>## [1] 3.182446</code></pre>
+<pre class="r"><code>#look up probability of critical value
+
+pt(2.5, 3) #find the pvalue wih a known critical value</code></pre>
+<pre><code>## [1] 0.9561467</code></pre>
+<pre class="r"><code>#look up critical value of normal distibution
+
+qnorm(0.975) # the output of this value is used for constructing the confidence interval or finding the p-value</code></pre>
+<pre><code>## [1] 1.959964</code></pre>
+<pre class="r"><code>#look up probability of critical value
+
+pnorm(5) #find the pvalue wih a known critical value</code></pre>
+<pre><code>## [1] 0.9999997</code></pre>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. For more details
+on using R Markdown see <a href="http://rmarkdown.rstudio.com"
+class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be
+generated that includes both content as well as the output of any
+embedded R code chunks within the document. You can embed an R code
+chunk like this:</p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the
+code chunk to prevent printing of the R code that generated the
+plot.</p>
 </div>
 
 

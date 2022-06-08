@@ -1,7 +1,7 @@
 ---
 title: "Welcome to my website!"
+output: html_document
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r Set WD and read in data, include = FALSE}
 
 #set your working directory
-setwd("C:/Users/nickc/Desktop/Github/nickc/rice-practice-website ")
+setwd("C:/Users/nickc/Desktop/Github/nickc/rice-practice-website")
 
 #Load your libraries
 library(readxl)
@@ -23,7 +23,6 @@ library(lubridate)
 library(devtools)
 #install_github('mcooper/moranfast')
 #library(moranfast)
-remotes::install_github("rspatial/rspatial")
 library(rspatial)
 library(latticeExtra)
 library(RColorBrewer)
@@ -34,9 +33,8 @@ library(readxl)
 library(ggpubr)
 library(ggrepel)
 library(sf)
-install.packages("rnaturalearthdata")
 library(rnaturalearth)
-devtools::install_github("ropensci/rnaturalearthhires")
+#devtools::install_github("ropensci/rnaturalearthhires")
 library(rnaturalearthhires)
 
 ```
@@ -48,3 +46,121 @@ str(Rice)
 head(Rice)
 ```
 
+```{r Lets get to know the Region}
+
+
+##initial map of the region
+theme_set(theme_light())
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+#plot the world
+world %>% ggplot() + geom_sf()
+#plot the world in colr
+world %>% ggplot() + 
+  geom_sf(color = "black", fill = "yellow")
+#plot GDP as a color gradient
+world %>% ggplot() + 
+  geom_sf(color = "black", aes(fill = gdp_md_est))
+#plot SE Asia by coordinates
+world %>% ggplot() +
+  geom_sf() +
+  coord_sf(xlim = c(88.594382881345, 152.93774260658), ylim =  c(31.29186472309,-12.375471986864), expand = FALSE)
+
+### plot SE asia  with a population gradient
+world %>% 
+  ggplot() +
+  geom_sf(color="black", aes(fill = pop_est)) +
+  coord_sf(xlim = c(88.594382881345, 152.93774260658), 
+           ylim = c(31.29186472309,-12.375471986864), expand = FALSE)
+
+### plot SE asia by region and with a population gradient
+world %>% filter(subregion == "South-Eastern Asia") %>% 
+  ggplot() +
+  geom_sf(color="black", aes(fill = pop_est)) +
+  coord_sf(xlim = c(88.594382881345, 152.93774260658), 
+           ylim = c(31.29186472309,-12.375471986864), expand = FALSE)
+```
+
+```{r Change in yield over time}
+
+###initial plot of change over time faceted
+ggplot(Rice, aes(x=Year,y= Yield_tonnes_per_ha,group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_smooth()+
+  facet_wrap(~Country, nrow =1) +
+  labs(title="Rice Yield Per Hectare Over time", 
+       x="Year", y = "Tonnes per Hectare")+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))
+
+###initial plot of change over time on same graph
+ggplot(Rice, aes(x=Year,y= Yield_tonnes_per_ha, group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_smooth() +
+  labs(title="Rice Yield Per Hectare Over time", 
+       x="Year", y = "Tonnes per Hectare")+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))
+
+
+```
+
+```{r Plot Detrended data}
+###initial plot of change over time faceted
+ggplot(Rice, aes(x=Year,y= Yield_zscore,group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(~Country, nrow =1) +
+  labs(title="Rice Yield Anomolies Over time", 
+       x="Year", y = "Yield Anomolies")+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))
+
+###initial plot of change over time on same graph
+ggplot(Rice, aes(x=Year,y= Yield_zscore, group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_line() +
+  labs(title="Rice Yield Anomolies Over time", 
+       x="Year", y = "Yield Anomolies")+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))
+
+
+```
+
+```{r Time Series Analysis}
+library(tseries)
+library(forecast)
+library(lubridate)
+
+Myanmar<-filter(Rice, Country == "Myanmar")
+tsData<-ts(Myanmar$Yield_tonnes_per_ha, start=c(1961), end=c(2017), frequency=1) 
+
+plot(tsData, xlab ="Yea",
+        ylab ="Yield Per Hectare",
+        main ="Rice Yield Myanmar",
+        col.main ="darkgreen")
+
+fit <- auto.arima(tsData)
+summary(fit)
+accuracy(fit)
+# plotting the graph with next
+# 5 year forecasted values
+plot(forecast(fit, 5), xlab ="Year",
+ylab ="Yield per Hectare",
+main ="Rice Yield Myanmar", col.main ="darkgreen")
+
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

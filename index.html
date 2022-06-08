@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Welcome to my website!</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">REEU Practice Site</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Rice Data
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-user"></span>
+     
+    Papaya
+  </a>
+</li>
+<li>
+  <a href="https://YOURGITHUB.github.io/blog/">
+    <span class="fa fa-rss"></span>
+     
+    Blog
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:YOUREMAIL">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+<li>
+  <a href="https://github.com/YOURGITHUB">
+    <span class="fa fa-github"></span>
+     
+    GitHub
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Welcome to my website!</h1>
+
+</div>
+
+
+<p>Rice is a major staple across the world. One particular region where
+it is very important is southeast Asia. This data set explores the
+change in rice yields over time using data from the Food and Agriculture
+Organization of the United Nations.</p>
+<pre class="r"><code>Rice&lt;-read_excel(&quot;Rice_yield_FAO.xlsx&quot;, sheet = &quot;Sheet1&quot;)
+str(Rice)</code></pre>
+<pre><code>## tibble [285 × 10] (S3: tbl_df/tbl/data.frame)
+##  $ Country              : chr [1:285] &quot;Cambodia&quot; &quot;Cambodia&quot; &quot;Cambodia&quot; &quot;Cambodia&quot; ...
+##  $ Item                 : chr [1:285] &quot;Rice, paddy&quot; &quot;Rice, paddy&quot; &quot;Rice, paddy&quot; &quot;Rice, paddy&quot; ...
+##  $ Year                 : num [1:285] 1961 1962 1963 1964 1965 ...
+##  $ Area_harvested_ha    : num [1:285] 2182000 2286000 2233000 2377000 2344000 ...
+##  $ Yield_hg_per_ha      : num [1:285] 10921 8920 11742 11611 10666 ...
+##  $ Production_tonnes    : num [1:285] 2383000 2039000 2622000 2760000 2500000 ...
+##  $ Yield_tonnes_per_ha  : num [1:285] 1.092 0.892 1.174 1.161 1.067 ...
+##  $ Yield_RM_7yr_mean    : num [1:285] NA NA NA 0.0624 -0.076 ...
+##  $ Yield_RM_overall_mean: num [1:285] NA NA NA 0.0647 -0.0736 ...
+##  $ Yield_zscore         : num [1:285] NA NA NA 0.631 -0.718 ...</code></pre>
+<pre class="r"><code>head(Rice)</code></pre>
+<pre><code>## # A tibble: 6 × 10
+##   Country  Item         Year Area_harvested_ha Yield_hg_per_ha Production_tonnes
+##   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;             &lt;dbl&gt;           &lt;dbl&gt;             &lt;dbl&gt;
+## 1 Cambodia Rice, paddy  1961           2182000           10921           2383000
+## 2 Cambodia Rice, paddy  1962           2286000            8920           2039000
+## 3 Cambodia Rice, paddy  1963           2233000           11742           2622000
+## 4 Cambodia Rice, paddy  1964           2377000           11611           2760000
+## 5 Cambodia Rice, paddy  1965           2344000           10666           2500000
+## 6 Cambodia Rice, paddy  1966           2182000           10889           2376000
+## # … with 4 more variables: Yield_tonnes_per_ha &lt;dbl&gt;, Yield_RM_7yr_mean &lt;dbl&gt;,
+## #   Yield_RM_overall_mean &lt;dbl&gt;, Yield_zscore &lt;dbl&gt;</code></pre>
+<pre class="r"><code>##initial map of the region
+theme_set(theme_light())
+world &lt;- ne_countries(scale = &quot;medium&quot;, returnclass = &quot;sf&quot;)
+
+#plot the world
+world %&gt;% ggplot() + geom_sf()</code></pre>
+<p><img src="index_files/figure-html/Lets%20get%20to%20know%20the%20Region-1.png" width="672" /></p>
+<pre class="r"><code>#plot the world in colr
+world %&gt;% ggplot() + 
+  geom_sf(color = &quot;black&quot;, fill = &quot;yellow&quot;)</code></pre>
+<p><img src="index_files/figure-html/Lets%20get%20to%20know%20the%20Region-2.png" width="672" /></p>
+<pre class="r"><code>#plot GDP as a color gradient
+world %&gt;% ggplot() + 
+  geom_sf(color = &quot;black&quot;, aes(fill = gdp_md_est))</code></pre>
+<p><img src="index_files/figure-html/Lets%20get%20to%20know%20the%20Region-3.png" width="672" /></p>
+<pre class="r"><code>#plot SE Asia by coordinates
+world %&gt;% ggplot() +
+  geom_sf() +
+  coord_sf(xlim = c(88.594382881345, 152.93774260658), ylim =  c(31.29186472309,-12.375471986864), expand = FALSE)</code></pre>
+<p><img src="index_files/figure-html/Lets%20get%20to%20know%20the%20Region-4.png" width="672" /></p>
+<pre class="r"><code>### plot SE asia  with a population gradient
+world %&gt;% 
+  ggplot() +
+  geom_sf(color=&quot;black&quot;, aes(fill = pop_est)) +
+  coord_sf(xlim = c(88.594382881345, 152.93774260658), 
+           ylim = c(31.29186472309,-12.375471986864), expand = FALSE)</code></pre>
+<p><img src="index_files/figure-html/Lets%20get%20to%20know%20the%20Region-5.png" width="672" /></p>
+<pre class="r"><code>### plot SE asia by region and with a population gradient
+world %&gt;% filter(subregion == &quot;South-Eastern Asia&quot;) %&gt;% 
+  ggplot() +
+  geom_sf(color=&quot;black&quot;, aes(fill = pop_est)) +
+  coord_sf(xlim = c(88.594382881345, 152.93774260658), 
+           ylim = c(31.29186472309,-12.375471986864), expand = FALSE)</code></pre>
+<p><img src="index_files/figure-html/Lets%20get%20to%20know%20the%20Region-6.png" width="672" /></p>
+<pre class="r"><code>###initial plot of change over time faceted
+ggplot(Rice, aes(x=Year,y= Yield_tonnes_per_ha,group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_smooth()+
+  facet_wrap(~Country, nrow =1) +
+  labs(title=&quot;Rice Yield Per Hectare Over time&quot;, 
+       x=&quot;Year&quot;, y = &quot;Tonnes per Hectare&quot;)+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="index_files/figure-html/Change%20in%20yield%20over%20time-1.png" width="672" /></p>
+<pre class="r"><code>###initial plot of change over time on same graph
+ggplot(Rice, aes(x=Year,y= Yield_tonnes_per_ha, group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_smooth() +
+  labs(title=&quot;Rice Yield Per Hectare Over time&quot;, 
+       x=&quot;Year&quot;, y = &quot;Tonnes per Hectare&quot;)+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="index_files/figure-html/Change%20in%20yield%20over%20time-2.png" width="672" /></p>
+<pre class="r"><code>###initial plot of change over time faceted
+ggplot(Rice, aes(x=Year,y= Yield_zscore,group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_line()+
+  facet_wrap(~Country, nrow =1) +
+  labs(title=&quot;Rice Yield Anomolies Over time&quot;, 
+       x=&quot;Year&quot;, y = &quot;Yield Anomolies&quot;)+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))</code></pre>
+<pre><code>## Warning: Removed 30 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 30 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="index_files/figure-html/Plot%20Detrended%20data-1.png" width="672" /></p>
+<pre class="r"><code>###initial plot of change over time on same graph
+ggplot(Rice, aes(x=Year,y= Yield_zscore, group = 
+Country, colour = Country))+
+  geom_point()+
+  geom_line() +
+  labs(title=&quot;Rice Yield Anomolies Over time&quot;, 
+       x=&quot;Year&quot;, y = &quot;Yield Anomolies&quot;)+
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))</code></pre>
+<pre><code>## Warning: Removed 30 rows containing missing values (geom_point).
+## Removed 30 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="index_files/figure-html/Plot%20Detrended%20data-2.png" width="672" /></p>
+<pre class="r"><code>library(tseries)</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
+<pre class="r"><code>library(forecast)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;forecast&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggpubr&#39;:
+## 
+##     gghistogram</code></pre>
+<pre class="r"><code>library(lubridate)
+
+Myanmar&lt;-filter(Rice, Country == &quot;Myanmar&quot;)
+tsData&lt;-ts(Myanmar$Yield_tonnes_per_ha, start=c(1961), end=c(2017), frequency=1) 
+
+plot(tsData, xlab =&quot;Yea&quot;,
+        ylab =&quot;Yield Per Hectare&quot;,
+        main =&quot;Rice Yield Myanmar&quot;,
+        col.main =&quot;darkgreen&quot;)</code></pre>
+<p><img src="index_files/figure-html/Time%20Series%20Analysis-1.png" width="672" /></p>
+<pre class="r"><code>fit &lt;- auto.arima(tsData)
+summary(fit)</code></pre>
+<pre><code>## Series: tsData 
+## ARIMA(1,1,0) with drift 
+## 
+## Coefficients:
+##          ar1   drift
+##       0.2501  0.0388
+## s.e.  0.1283  0.0185
+## 
+## sigma^2 = 0.01134:  log likelihood = 46.95
+## AIC=-87.9   AICc=-87.43   BIC=-81.82
+## 
+## Training set error measures:
+##                        ME      RMSE        MAE         MPE     MAPE      MASE
+## Training set 2.003904e-05 0.1036517 0.07405868 -0.06528248 3.022465 0.8664186
+##                     ACF1
+## Training set -0.03555245</code></pre>
+<pre class="r"><code>accuracy(fit)</code></pre>
+<pre><code>##                        ME      RMSE        MAE         MPE     MAPE      MASE
+## Training set 2.003904e-05 0.1036517 0.07405868 -0.06528248 3.022465 0.8664186
+##                     ACF1
+## Training set -0.03555245</code></pre>
+<pre class="r"><code># plotting the graph with next
+# 5 year forecasted values
+plot(forecast(fit, 5), xlab =&quot;Year&quot;,
+ylab =&quot;Yield per Hectare&quot;,
+main =&quot;Rice Yield Myanmar&quot;, col.main =&quot;darkgreen&quot;)</code></pre>
+<p><img src="index_files/figure-html/Time%20Series%20Analysis-2.png" width="672" /></p>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. For more details
+on using R Markdown see <a href="http://rmarkdown.rstudio.com"
+class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be
+generated that includes both content as well as the output of any
+embedded R code chunks within the document. You can embed an R code
+chunk like this:</p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the
+code chunk to prevent printing of the R code that generated the
+plot.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

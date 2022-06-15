@@ -7,13 +7,16 @@ navbar:
     - text: "Home"
       icon: fa-home
       href: index.html
+    - text: "Statistics"
+      icon: 
+      href: datascience.html
     - text: "Data Science"
       icon: 
       href: datascience.html
   right:
     - text: "Contact me"
       icon: fa-envelope-o
-      href: mailto:emilybmwhite@gmail.com  # CHANGE HERE
+      href: mailto:emalcolmwhite@middlebury.edu  # CHANGE HERE
     - text: "YouTube"
       icon: fa-youtube-play
       href: https://www.youtube.com/channel/UCGE_eugh_WGuQfb1T4Y35SA

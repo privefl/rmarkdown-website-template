@@ -30,8 +30,7 @@ include:
 
 Emily Malcolm-White\
 *Lecturer at Middlebury College*\
-*Lecturer at University of Vermont*\
-emilybmwhite@gmail.com
+<a href = "mailto: emalcolmwhite@middlebury.edu"> emalcolmwhite@middlebury.edu </a>
 </div>
 
 <div class="column-main">
@@ -40,7 +39,7 @@ emilybmwhite@gmail.com
 
 I believe that STEM education should be inclusive and accessible for all. I hope to minimize barriers for all students, including those with varying academic backgrounds, those with responsibilities outside of academics, and those with disabilities. I take the time to learn about innovative and effective teaching pedagogy and like to keep trying new things to maximize my effectiveness as an instructor. 
 
-I currently work as a Lecturer in Mathematics and Statistics at Middlebury College and a Lecturer in Statistics at the University of Vermont. Prior, I was a Math and Statistics Specialist within the Academic Assistance and Tutoring Centers at UC Davis. I have a Bachelor of Science in Applied Mathematics and Statistics from the University of Guelph and a Masters of Science in Statistics from the University of Victoria. 
+I currently work as a Lecturer in Mathematics and Statistics at Middlebury College. Prior, I was a Math and Statistics Specialist within the Academic Assistance and Tutoring Centers at UC Davis. I have a Bachelor of Science in Applied Mathematics and Statistics from the University of Guelph and a Masters of Science in Statistics from the University of Victoria. 
 
 <div class="btn-group" role="group" aria-label="Links">
   <a role="button" class="btn btn-outline-primary btn-sm" href="EMW_CV.pdf">View CV</a>

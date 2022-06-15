@@ -2,7 +2,6 @@ name: "Emily Malcolm-White"                                # CHANGE HERE
 output_dir: "."
 navbar:
   title: "Emily Malcolm-White"                             # CHANGE HERE 
-  type: inverse
   left:
     - text: "Home"
       icon: fa-home

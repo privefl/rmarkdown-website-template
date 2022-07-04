@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Twenty Seconds Resume/CV
+% LaTeX Template
+% Version 1.1 (8/1/17)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Carmine Spagnuolo (cspagnuolo@unisa.it) with major modifications by
+% Vel (vel@LaTeXTemplates.com)
+%
+% Adapted to be an Rmarkdown template by Rob J Hyndman
+% 23 November 2018
+%
+% License:
+% The MIT License (see included LICENSE file)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt,a4paper,]{twentysecondcv}
+
+\usepackage[scaled=0.86]{DejaVuSansMono}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{csquotes}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+\usepackage{booktabs}
+
+
+
+%----------------------------------------------------------------------------------------
+%	 PERSONAL INFORMATION
+%----------------------------------------------------------------------------------------
+
+% If you don't need one or more of the below, just remove the content leaving the command, e.g. \cvnumberphone{}
+
+% Profile pic
+\profilepic{mariecurie.jpg}
+
+\cvname{Marie Curie} % Your name
+
+\cvjobtitle{Professor} % Job title/career
+\cvdate{July 2022} % Date of birth or date of CV??
+\cvaddress{School of Physics \& Chemistry, École Normale
+Supérieure} % Short address/location, use \newline if more than 1 line is required
+\cvnumberphone{+1 22 3333 4444} % Phone number
+\cvsite{\href{http://mariecurie.com}{mariecurie.com}} % Personal website
+\cvmail{\href{mailto:Marie.Curie@ens.fr}{\nolinkurl{Marie.Curie@ens.fr}}} % Email address
+\cvtwitter{\href{https://twitter.com/mariecurie}{mariecurie}}
+\cvgithub{\href{https://github.com/mariecurie}{mariecurie}}
+\cvlinkedin{\href{https://www.linkedin.com/in/mariecurie}{mariecurie}}
+
+\lfoot{\sf Curriculum Vitae: Marie Curie}
+\rfoot{\sf\thepage}
+
+% Pandoc CSL macros
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\begin{document}
+\aboutme{Marie is a Polish and naturalized-French physicist and chemist
+who conducts pioneering research on radioactivity.}
+
+% Skill bar section, each skill must have a value between 0 an 6 (float)
+%\skills{{pursuer of rabbits/5.8},{good manners/4},{outgoing/4.3},{polite/4},{Java/0.01}}
+
+% Skill text section, each skill must have a value between 0 an 6
+%\skillstext{{lovely/4},{narcissistic/3}}
+
+\makeprofile % Print the sidebar
+
+
+
+
+\hypertarget{some-stuff-about-me}{%
+\section{Some stuff about me}\label{some-stuff-about-me}}
+
+\begin{itemize}
+\tightlist
+\item
+  I poisoned myself doing research.
+\item
+  I was the first woman to win a Nobel prize
+\item
+  I was the first person and only woman to win a Nobel prize in two
+  different sciences.
+\end{itemize}
+
+\hypertarget{education}{%
+\section{Education}\label{education}}
+
+\nopagebreak
+
+\begin{twenty}
+    \twentyitem{1889-91}{Informal studies}{Flying University}{Warsaw, Poland\par\empty}
+    \twentyitem{1893}{Master of Physics}{Sorbonne Université}{Paris, France\par\empty}
+    \twentyitem{1894}{Master of Mathematics}{Sorbonne Université}{Paris, France\par\empty}
+\end{twenty}
+
+\hypertarget{nobel-prizes}{%
+\section{Nobel Prizes}\label{nobel-prizes}}
+
+\nopagebreak
+
+\begin{twentyshort}
+    \twentyitemshort{1903}{Nobel Prize in Physics. Awarded for her work on radioactivity with Pierre Curie and Henri Becquerel}
+    \twentyitemshort{1911}{Nobel Prize in Chemistry. Awarded for the discovery of radium and polonium}
+\end{twentyshort}
+
+\hypertarget{publications}{%
+\section{Publications}\label{publications}}
+
+\hypertarget{bibliography}{}
+\leavevmode\vadjust pre{\hypertarget{ref-R-vitae}{}}%
+\CSLLeftMargin{1. }
+\CSLRightInline{O'Hara-Wild, M., \& Hyndman, R. (2021). \emph{Vitae:
+Curriculum vitae for r markdown}.
+\url{https://CRAN.R-project.org/package=vitae}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tibble}{}}%
+\CSLLeftMargin{2. }
+\CSLRightInline{Müller, K., \& Wickham, H. (2022). \emph{Tibble: Simple
+data frames}. \url{https://CRAN.R-project.org/package=tibble}}
+
+
+\end{document}

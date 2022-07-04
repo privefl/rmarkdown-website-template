@@ -1,9 +1,45 @@
 ---
-title: "CV"
+name: Jeremy Graber
+date: "`r format(Sys.time(), '%B, %Y')`"
+profilepic: pic.jpg
+www: mitchelloharawild.com
+github: mitchelloharawild
+linkedin: mitchelloharawild
+twitter: mitchoharawild
+headcolor: 414141
+docname: CV
+output: vitae::awesomecv
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+
+```
 
 <a href="CV.pdf#" class="download" title="Download CV as PDF">Download CV</a>			
 
-## Header
+<center><h2> Jeremy Graber </h2>
+<h4> jeremy.graber@cuanschutz.edu | jeremy.graber@va.gov </h4> </center>
 
-Say more about your CV here.
+
+<b><h3> Education </b></h3>
+<hr>
+
+2023 &emsp; &emsp; PhD, Rehabilitation Science (in progress), University of Colorado Anschutz Medical Campus 
+
+2016 &emsp; &emsp; Doctor of Physical Therapy, Indiana University
+
+2013 &emsp; &emsp; BS, Kinesiology, Indiana University
+
+<br>
+
+<b><h3> Employment and Positions Held </b></h3>
+<hr>
+
+2021-&emsp; &emsp;Advanced Geriatrics Research Fellow, Geriatric Research Education and Clinical Center (GRECC), <br>
+&emsp; &emsp; &emsp;  VA Eastern Colorado Health Care System
+
+2019-&emsp; &emsp;PhD Candidate / Research Assistant, Physical Therapy Program, University of Colorado Anschutz Medical Campus
+
+2018-2019 Physical Therapist, Active Edge Physical Therapy, Oregon City, OR
+

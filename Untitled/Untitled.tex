@@ -1,0 +1,139 @@
+%% start of file `template.tex'.
+%% Copyright 2006-2015 Xavier Danaux (xdanaux@gmail.com).
+%
+% Adapted to be an Rmarkdown template by Mitchell O'Hara-Wild
+% 8 February 2019
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+
+\documentclass[11pt,a4paper,]{moderncv}
+
+% moderncv themes
+\moderncvstyle{casual}                             % style options are 'casual' (default), 'classic', 'banking', 'oldstyle' and 'fancy'
+
+\definecolor{color0}{rgb}{0,0,0}% black
+\definecolor{color1}{HTML}{3873B3}% custom
+\definecolor{color2}{rgb}{0.45,0.45,0.45}% dark grey
+
+\usepackage[scaled=0.86]{DejaVuSansMono}
+
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\def\donothing#1{#1}
+\def\emaillink#1{#1}
+
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% character encoding
+%\usepackage[utf8]{inputenc}                       % if you are not using xelatex ou lualatex, replace by the encoding you are using
+%\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
+
+% adjust the page margins
+\usepackage[scale=0.75,footskip=60pt]{geometry}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvheadnamewidth}{10cm}            % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+
+
+% personal data
+\name{Marie}{Curie}
+\title{Professor}
+\address{School of Physics \& Chemistry, École Normale Supérieure}{}{}
+\phone[mobile]{+1 22 3333 4444} % Phone number
+\email{\donothing{\href{mailto:Marie.Curie@ens.fr}{\nolinkurl{Marie.Curie@ens.fr}}}}
+\homepage{mariecurie.com} % Personal website
+\social[linkedin]{mariecurie}
+\social[twitter]{mariecurie}
+\social[github]{mariecurie}
+% \extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+
+
+
+
+% Pandoc CSL macros
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%\begin{CJK*}{UTF8}{gbsn}                          % to typeset your resume in Chinese using CJK
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+
+
+\hypertarget{some-stuff-about-me}{%
+\section{Some stuff about me}\label{some-stuff-about-me}}
+
+\begin{itemize}
+\tightlist
+\item
+  I poisoned myself doing research.
+\item
+  I was the first woman to win a Nobel prize
+\item
+  I was the first person and only woman to win a Nobel prize in two
+  different sciences.
+\end{itemize}
+
+\hypertarget{education}{%
+\section{Education}\label{education}}
+
+\nopagebreak
+    \cventry{1889-91}{Informal studies}{Flying University}{Warsaw, Poland}{}{\empty}
+    \cventry{1893}{Master of Physics}{Sorbonne Université}{Paris, France}{}{\empty}
+    \cventry{1894}{Master of Mathematics}{Sorbonne Université}{Paris, France}{}{\empty}
+
+\hypertarget{nobel-prizes}{%
+\section{Nobel Prizes}\label{nobel-prizes}}
+
+\nopagebreak
+    \cvitem{1903}{Nobel Prize in Physics. Awarded for her work on radioactivity with Pierre Curie and Henri Becquerel}
+    \cvitem{1911}{Nobel Prize in Chemistry. Awarded for the discovery of radium and polonium}
+
+\hypertarget{publications}{%
+\section{Publications}\label{publications}}
+
+\hypertarget{bibliography}{}
+\leavevmode\vadjust pre{\hypertarget{ref-R-vitae}{}}%
+\CSLLeftMargin{1. }
+\CSLRightInline{O'Hara-Wild, M., \& Hyndman, R. (2021). \emph{Vitae:
+Curriculum vitae for r markdown}.
+\url{https://CRAN.R-project.org/package=vitae}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tibble}{}}%
+\CSLLeftMargin{2. }
+\CSLRightInline{Müller, K., \& Wickham, H. (2022). \emph{Tibble: Simple
+data frames}. \url{https://CRAN.R-project.org/package=tibble}}
+
+
+\end{document}
+
+%\clearpage\end{CJK*}                              % if you are typesetting your resume in Chinese using CJK; the \clearpage is required for fancyhdr to work correctly with CJK, though it kills the page numbering by making \lastpage undefined
+\end{document}
+
+
+%% end of file `template.tex'.

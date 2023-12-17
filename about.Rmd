@@ -1,7 +1,0 @@
----
-title: "About me"
----
-
-## Header
-
-Say more about you here.
